@@ -1,5 +1,4 @@
 <template>
-  <div id="app">
     <div class="navbarLogin">
       <div class="imgBoxNavbar">
         <img
@@ -9,11 +8,12 @@
         />
       </div>
       <div class="textBoxNavbar">
-        <div class="logIn"><router-link to="/"> LOGIN/ </router-link></div>
-        <div class="signUp"><a class="loginP" href="#"> SIGNUP</a></div>
+        <div class="logIn"><router-link to="/login"> LOGIN/ </router-link></div>
+        <div class="signUp"><router-link to="/Signup"> SIGNUP </router-link> </div>
+
       </div>
     </div>
-
+<router-view/>
     <div class="midBoxMainLogin">
       <form action="/auth" method="post">
         <div class="boxLogin">
@@ -26,6 +26,7 @@
               required
             />
           </div>
+
           <div class="boxIn">
             <input
               name="loginLabel"
@@ -35,32 +36,32 @@
               required
             />
           </div>
+          <div class="boxIn">
+              <input
+              name="loginLabel"
+              placeholder="e-mail ..."
+              type="text"
+              id="email"
+              required
+            />
+          </div>
           <div class="connected">
-            <input class="connect" type="submit" value="Se connecter" />
+            <input class="connect" type="submit" value="S'inscrire'" />
           </div>
         </div>
       </form>
     </div>
-  </div>
+
 </template>
 
 <script>
 
-import axios from "axios";
-export default {
-  name: "app",
-  data() {
-    return {
-      messages: ["coucou", "aze"],
-    };
-  },
-  created() {
-    axios.get("http://localhost:5000/messages");
-  },
-};
+export default{
+    name: "SignUpVue"
+}
+
+
 </script>
-
-
 
 <style scoped>
 body {
@@ -162,5 +163,3 @@ input[name="loginLabel"] {
     inset 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
 </style>
-
-

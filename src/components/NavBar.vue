@@ -8,10 +8,10 @@
       />
     </div>
     <div class="textBoxNavbar">
-      <div class="logIn"><router-link to="/login"> LOGIN | </router-link></div>
-      <div class="signUp">
-        <router-link to="/Signup"> | SIGNUP </router-link>
-      </div>
+     <img 
+     :src="require('@/assets/logout.png')"
+        class="GroupoLogo"
+        alt="image pour se déconnecter"/>
     </div>
   </div>
 </template>

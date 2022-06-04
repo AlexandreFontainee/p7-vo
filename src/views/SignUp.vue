@@ -8,13 +8,13 @@
 <!-- Les champs à remplir en fonction de la page -->
   <div class="container_input">
     <div class="input_box">
-      <input class="input_Style" type="text" placeholder="Nom d'utilisateur ..." required >
+      <input class="input_Style" type="text" placeholder="Nom d'utilisateur ..." required v-model="name" id="name" pattern="[a-zâäàéèùêëîïôöçñA-Z-0-9\s]{3,25}">
     </div>
     <div class="input_box">
-      <input class="input_Style" type="text" placeholder="e-mail ..." required >
+      <input class="input_Style" type="text" placeholder="e-mail ..." required v-model="email" id="email" pattern="[a-zâäàéèùêëîïôöçñA-Z0-9.-_]+[@]{1}[a-zA_Z0-9.-_]+[.]{1}[a-z]{2,4}">
     </div>
     <div class="input_box">
-      <input class="input_Style" type="password" placeholder="mot de passe ..." required>
+      <input class="input_Style" type="password" placeholder="mot de passe ..." required v-model="password" id="password"  pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})">
     </div>
     </div>
    
@@ -30,9 +30,18 @@
 <script>
 export default {
     name: "signUp", 
+    data(){
+      return{
+          email: "",
+          name: "",
+          password: "",
+        
+      }
+    },
+    
     methods: {
         Btn_check_log(){
-            this.$router.push('/profile')
+            console.log(this.email, this.name, this.password)
         }
     }
 }

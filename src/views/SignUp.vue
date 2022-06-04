@@ -3,11 +3,13 @@
 <div class="faux_body">
   <div class="box">
 
-    <h1 class="box_title" >Se connecter</h1>
+    <h1 class="box_title" >Créer un compte</h1>
 
 <!-- Les champs à remplir en fonction de la page -->
   <div class="container_input">
-
+    <div class="input_box">
+      <input class="input_Style" type="text" placeholder="Nom d'utilisateur ..." required >
+    </div>
     <div class="input_box">
       <input class="input_Style" type="text" placeholder="e-mail ..." required >
     </div>
@@ -17,8 +19,8 @@
     </div>
    
 <!-- Notre bouton d'envoie des infos -->
-    <button class="box_Button" @click="Btn_check_log" > connexion </button>
-     <p class="redirect" >Pas encore inscrit ? <router-link to="/signup">Rejoignez-nous !</router-link></p>
+    <button class="box_Button" @click="Btn_check_log"> Créer un compte </button>
+     <p class="redirect">Vous avez déjà un compte ? <router-link to="/login">Connectez-vous !</router-link></p>
 
   </div>
   </div>
@@ -26,20 +28,16 @@
 </template>
 
 <script>
-// mes imports
-
 export default {
-  name: "LogIn",
-  components: {},
-methods: {
+    name: "signUp", 
+    methods: {
         Btn_check_log(){
             this.$router.push('/profile')
         }
     }
-};
+}
+
 </script>
-
-
 
 <style scoped>
 .faux_body{
@@ -101,5 +99,3 @@ input[class="input_Style"]{
 
 
 </style>
-
-

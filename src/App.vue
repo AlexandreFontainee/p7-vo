@@ -1,12 +1,8 @@
 <template>
   <div id="App">
     
-    <header>
-        <div class="container">
-        <img src="./assets/logo.png" class="logo" alt="Logo Groupomania " />
-        <nav class="redirect"><p> <router-link to="/Login">Rejoignez l'aventure groupomania !</router-link></p></nav>
+        <div class="container-global">
         </div>
-    </header>
     <router-view></router-view>
 
 
@@ -19,7 +15,7 @@
 </script>
 
 
- <style>
+ <style >
  body, html {
   margin: 0;
   padding: 0;

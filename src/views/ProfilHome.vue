@@ -1,23 +1,9 @@
 <template>
-  <div class="navbar">
-    <div class="glob">
-      <div>
-        <img class="logo" src="/Front/images/logo.png" alt="logo groupomania" />
-      </div>
-      <div class="home">
-        <img class="homeLogo" src="/Front/images/home.PNG " alt="logo home" />
-        <p>Home</p>
-      </div>
-    </div>
-    <div class="pdp">
-      <img class="logPic" src="/Front/images/logout.png" alt="logout" />
-      <p>Se déconnecter</p>
-    </div>
-  </div>
+  <navbar/>
 
   <div class="ContainMainProfil">
     <div class="PicProfile">
-      <div><img class="pdpProfil" src="./assets/akita.png" /></div>
+      <div><img class="pdpProfil"  :src="require('@/assets/akita.png')" /></div>
       <div class="btnPicProfile">
         <input class="editPdp" type="button" value="Edit Picture" />
       </div>
@@ -53,8 +39,13 @@
 </template>
 
 <script>
+import navbar from "@/components/NavBar.vue"
+
 export default {
   name: "ProfilHome",
+  components:{
+    navbar,
+  }
 };
 </script>
 

@@ -6,15 +6,15 @@
     <h1 class="box_title" >Se connecter</h1>
 
 <!-- Les champs à remplir en fonction de la page -->
-  <div class="container_input">
-
+<form method="POST" class="container_input">
+  
     <div class="input_box">
       <input class="input_Style" type="text" placeholder="e-mail ..." required v-model="email" id="email" pattern="[a-zâäàéèùêëîïôöçñA-Z0-9.-_]+[@]{1}[a-zA_Z0-9.-_]+[.]{1}[a-z]{2,4}">
     </div>
     <div class="input_box">
       <input class="input_Style" type="password" placeholder="mot de passe ..." required v-model="password" id="password"  pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})">
     </div>
-    </div>
+    </form>
    
 <!-- Notre bouton d'envoie des infos -->
     <button class="box_Button" @click="Btn_check_log" > connexion </button>

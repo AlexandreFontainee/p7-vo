@@ -1,55 +1,101 @@
 <template>
-<div class="container_global">
-<div class="faux_body">
-  <div class="box">
+  <div class="container_global">
+    <div class="faux_body">
+      <div class="box">
+        <h1 class="box_title">Créer un compte</h1>
 
-    <h1 class="box_title" >Créer un compte</h1>
+        <!-- Les champs à remplir en fonction de la page -->
+        <form method="Post" class="container_input">
+          <div class="input_box">
+            <input
+              class="input_Style"
+              type="text"
+              placeholder="Nom d'utilisateur ..."
+              required
+              v-model="name"
+              id="name"
+              pattern="[a-zâäàéèùêëîïôöçñA-Z-0-9\s]{3,25}"
+            />
+          </div>
+          <div class="input_box">
+            <input
+              class="input_Style"
+              type="text"
+              placeholder="e-mail ..."
+              required
+              v-model="email"
+              id="email"
+              pattern="[a-zâäàéèùêëîïôöçñA-Z0-9.-_]+[@]{1}[a-zA_Z0-9.-_]+[.]{1}[a-z]{2,4}"
+            />
+          </div>
+          <div class="input_box">
+            <input
+              class="input_Style"
+              type="password"
+              placeholder="mot de passe ..."
+              required
+              v-model="password"
+              id="password"
+              pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})"
+            />
+          </div>
+        </form>
 
-<!-- Les champs à remplir en fonction de la page -->
-  <div class="container_input">
-    <div class="input_box">
-      <input class="input_Style" type="text" placeholder="Nom d'utilisateur ..." required v-model="name" id="name" pattern="[a-zâäàéèùêëîïôöçñA-Z-0-9\s]{3,25}">
+        <!-- Notre bouton d'envoie des infos -->
+        <button class="box_Button" @click="Btn_check_log">
+          Créer un compte
+        </button>
+        <p class="redirect">
+          Vous avez déjà un compte ?
+          <router-link to="/login">Connectez-vous !</router-link>
+        </p>
+      </div>
     </div>
-    <div class="input_box">
-      <input class="input_Style" type="text" placeholder="e-mail ..." required v-model="email" id="email" pattern="[a-zâäàéèùêëîïôöçñA-Z0-9.-_]+[@]{1}[a-zA_Z0-9.-_]+[.]{1}[a-z]{2,4}">
-    </div>
-    <div class="input_box">
-      <input class="input_Style" type="password" placeholder="mot de passe ..." required v-model="password" id="password"  pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})">
-    </div>
-    </div>
-   
-<!-- Notre bouton d'envoie des infos -->
-    <button class="box_Button" @click="Btn_check_log"> Créer un compte </button>
-     <p class="redirect">Vous avez déjà un compte ? <router-link to="/login">Connectez-vous !</router-link></p>
-
-  </div>
-  </div>
   </div>
 </template>
 
 <script>
-export default {
-    name: "signUp", 
-    data(){
-      return{
-          email: "",
-          name: "",
-          password: "",
-        
-      }
-    },
-    
-    methods: {
-        Btn_check_log(){
-            console.log(this.email, this.name, this.password)
-        }
-    }
-}
+import axios from "axios";
 
+export default {
+  name: "signUp",
+  data() {
+    return {
+      email: "",
+      name: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    Btn_check_log() {
+      let dataInput = {
+        email: this.email,
+        name: this.name,
+        password: this.password,
+      };
+      console.log(dataInput);
+
+      axios.post("http://localhost:5000/api/authJwt/signup", {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+      })
+      .then((response) => {
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("userId", response.data.userId);
+            this.$router.push("/login");
+          })
+          .catch(
+            () => (this.error = "problème lors de la création du compte")
+          );
+    },
+  },
+};
 </script>
 
 <style scoped>
-.faux_body{
+.faux_body {
   width: 100%;
   height: 700px;
   margin: 0;
@@ -58,17 +104,16 @@ export default {
   align-items: center;
 }
 
-
-.box{
+.box {
   display: flex;
   flex-direction: column;
-    width: 40%;
-    align-items: center;
-    margin: auto;
+  width: 40%;
+  align-items: center;
+  margin: auto;
   background-color: white;
 }
 
-.input_box{
+.input_box {
   margin-top: 20px;
   width: 50%;
   display: flex;
@@ -78,33 +123,30 @@ export default {
 }
 /*  Mes inputs */
 
-.container_input{
+.container_input {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-input[class="input_Style"]{
-    width: 100%;
-    height: 30px;
-    background-color: #EBEDEF;
-    border-radius: 10px;
-  
+input[class="input_Style"] {
+  width: 100%;
+  height: 30px;
+  background-color: #ebedef;
+  border-radius: 10px;
 }
 
-.box_Button{
+.box_Button {
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
-
-
 </style>

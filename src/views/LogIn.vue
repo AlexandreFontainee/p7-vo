@@ -1,5 +1,5 @@
 <template>
-<div class="container_global">
+<div class="container-global">
 <div class="faux_body">
   <div class="box">
 
@@ -39,7 +39,9 @@ export default {
   },
 methods: {
         Btn_check_log(){
-            console.log(this.email, this.password)
+            console.log(this.email, this.password);
+            this.$router.push('/HomePage');
+
         }
     }
 };
@@ -48,11 +50,12 @@ methods: {
 
 
 <style scoped>
+
 .faux_body{
   width: 100%;
-  height: 700px;
+  height: 940px;
   margin: 0;
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
   display: flex;
   align-items: center;
 }

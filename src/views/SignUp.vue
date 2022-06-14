@@ -75,7 +75,6 @@ export default {
         password: this.password,
       };
       console.log(dataInput);
-
       axios.post("http://localhost:5000/api/authJwt/signup", {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
@@ -97,9 +96,9 @@ export default {
 <style scoped>
 .faux_body {
   width: 100%;
-  height: 700px;
+  height: 940px;
   margin: 0;
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
   display: flex;
   align-items: center;
 }

@@ -5,6 +5,7 @@
         :src="require('@/assets/logo.png')"
         class="logoLeft"
         alt="logo Groupomania"
+        @click="goToHome()"
       />
     </div>
     <div class="logo_right">
@@ -30,6 +31,7 @@
 
 
 <script>
+
 export default {
   name: "navBar",
 
@@ -45,6 +47,9 @@ export default {
           localStorage.clear("token")
         )
       },
+      goToHome: function(){
+        this.$router.push('/HomePage')
+        }
     };
   },
 };

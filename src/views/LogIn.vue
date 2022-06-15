@@ -15,9 +15,13 @@
       <input class="input_Style" type="password" placeholder="mot de passe ..." required v-model="password" id="password"  pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})">
     </div>
     </form>
+
+    <div v-show="empty" >
+      <p>Information non correctes</p>
+    </div>
    
 <!-- Notre bouton d'envoie des infos -->
-    <button class="box_Button" @click="Btn_check_log" > connexion </button>
+    <button class="box_Button" @click="login()" > connexion </button>
      <p class="redirect" >Pas encore inscrit ? <router-link to="/signup">Rejoignez-nous !</router-link></p>
 
   </div>
@@ -26,7 +30,8 @@
 </template>
 
 <script>
-// mes imports
+import axios from 'axios';
+import router from '../router/index'
 
 export default {
   name: "LogIn",
@@ -35,12 +40,27 @@ export default {
     return{
       email: "",
       password: "",
+      empty: false
     }
   },
 methods: {
-        Btn_check_log(){
-            console.log(this.email, this.password);
-            this.$router.push('/HomePage');
+        login(){
+            if(!this.email || !this.password){
+              return this.empty = true;
+            }
+            axios.post("http://localhost:5000/api/authJwt/login",{
+              email : this.email,
+              password: this.password
+            })
+            .then(function (response){
+              localStorage.setItem("userId",  response.data.userId);
+              localStorage.setItem("token",   response.data.token);
+              router.push("/HomePage");
+            })
+            .catch((error)=>{
+              this.empty = true;
+              console.log(error)
+            })
 
         }
     }

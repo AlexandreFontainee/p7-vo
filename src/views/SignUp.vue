@@ -42,7 +42,7 @@
         </form>
 
         <!-- Notre bouton d'envoie des infos -->
-        <button class="box_Button" @click="Btn_check_log">
+        <button class="box_Button" @click="signup()">
           Créer un compte
         </button>
         <p class="redirect">
@@ -68,7 +68,7 @@ export default {
   },
 
   methods: {
-    Btn_check_log() {
+    signup() {
       let dataInput = {
         email: this.email,
         name: this.name,
@@ -80,9 +80,8 @@ export default {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
       })
-      .then((response) => {
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("userId", response.data.userId);
+      .then(() => {
+
             this.$router.push("/login");
           })
           .catch(

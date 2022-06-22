@@ -15,7 +15,9 @@
 
       <div class="ContainMainProfil">
         <div class="NameUserProfil">
-          <div><p class="named">Nom: Josette</p></div>
+          <div>
+            <p class="named">tqt</p>
+          </div>
           <div class="btnPicProfile">
             <input class="editPdp" type="button" value="Edit Name" />
           </div>
@@ -24,7 +26,9 @@
 
       <div class="ContainMainProfil">
         <div class="mdpProfil">
-          <div><p class="Password">Mot de Passe: **********</p></div>
+          <div>
+            <p class="Password">{{ user.id }}</p>
+          </div>
           <div class="btnPicProfile">
             <input class="editPdp" type="button" value="Edit Password" />
           </div>
@@ -38,7 +42,9 @@
             <input class="editPdp" type="button" value="Supprimer" />
           </div>
         </div>
+        <button class="testDelete" @click="deleteAccompt()"></button>
       </div>
+      <button @click="getCrud()"></button>
     </div>
   </div>
   <footEr />
@@ -47,12 +53,61 @@
 <script>
 import navbar from "@/components/NavBar.vue";
 import footEr from "@/components/FootEr.vue";
+import axios from "axios";
 
 export default {
   name: "ProfilHome",
   components: {
     navbar,
     footEr,
+  },
+  data() {
+    return {
+      user: {
+        id: localStorage.getItem("userId"),
+        email: "",
+        name: "",
+        password: "",
+      },
+    token: localStorage.getItem("token"),
+      userId: localStorage.getItem("userId"),
+    };
+  },
+  methods: {
+    getCrud() {
+      let id = localStorage.getItem("userId");
+
+      let getId = axios.get("http://localhost:5000/api/authJwt/user/:id" + id);
+      console.log(getId);
+      console.log(this.user);
+    },
+
+    deleteAccompt() {
+      let id = localStorage.getItem("userId");
+
+      let deleteUser = axios.delete(
+        "http://localhost:5000/api/authJwt/delete" + id
+      );
+      console.log(deleteUser);
+      alert("Votre compte a bien été supprimé !");
+      this.$router.push("/login");
+    },
+  },
+  created: function () {
+    let id = localStorage.getItem("userId");
+    axios
+      .get(
+        "http://127.0.0.1:5000/api/authJwt/user/:id" + id,
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+      )
+      .then((user) => {
+        this.name = user.data.name;
+        this.email = user.data.email;
+        this.id = user.data.id;
+        console.log(user)
+      });
   },
 };
 </script>
@@ -63,8 +118,7 @@ export default {
   height: 900px;
 }
 
-.boxProfile{
-
+.boxProfile {
   display: flex;
   flex-direction: column;
   padding-top: 20px;
@@ -172,5 +226,10 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.testDelete {
+  height: 30px;
+  width: 50px;
 }
 </style>

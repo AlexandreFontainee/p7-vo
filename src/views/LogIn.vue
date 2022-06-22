@@ -55,7 +55,7 @@ methods: {
             .then(function (response){
               localStorage.setItem("userId",  response.data.userId);
               localStorage.setItem("token",   response.data.token);
-              router.push("/HomePage");
+              router.push("/Profile");
             })
             .catch((error)=>{
               this.empty = true;

@@ -3,63 +3,87 @@
     <navbar />
 
     <!-- envoie du message -->
+
     <div class="background_box">
       <div class="containerBoxMessage">
-        <div class="post_message">
-          <div class="img_left">
-            <img
-              :src="require('@/assets/pdp.png')"
-              class="pdp"
-              alt="photo de profile"
-            />
+        <form method="POST" class="messagePost_input">
+          <div class="post_message">
+            <div class="img_left">
+              <img
+                :src="require('@/assets/pdp.png')"
+                class="pdp"
+                alt="photo de profile"
+              />
+            </div>
+
+            <div class="label_msg">
+              <input
+                type="text"
+                class="Write_msg"
+                placeholder="écrivez votre message ..."
+                id="message"
+              />
+            </div>
+            <div class="button_send" @click="sendMessage()"></div>
+
+            <div class="img_right">
+              <img
+                :src="require('@/assets/Img.png')"
+                class="img"
+                alt="selection image"
+              />
+            </div>
+
           </div>
-          <div class="label_msg">
-            <input
-              type="text"
-              class="Write_msg"
-              placeholder="écrivez votre message ..."
-            />
-          </div>
-          <div class="img_right">
-            <img
-              :src="require('@/assets/Img.png')"
-              class="img"
-              alt="selection image"
-            />
-          </div>
-        </div>
+        </form>
 
         <!-- partie avec les listes des messages -->
         <div class="BoxListmessages">
-
-            <div class="listeMsg">
-              <p>test</p>
-            </div>
-            <div class="listeMsg">
-              <p>test</p>
-            </div>
-            <div class="listeMsg">
-              <p>test</p>
-            </div>
-            <div class="listeMsg">
-              <p>test</p>
-            </div>
+          <div class="listeMsg">
+            <p>test</p>
+          </div>
+          <div class="listeMsg">
+            <p>test</p>
+          </div>
+          <div class="listeMsg">
+            <p>test</p>
+          </div>
+          <div class="listeMsg">
+            <p>test</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <footEr/>
+  <footEr />
 </template>
 
 <script>
 import navbar from "@/components/NavBar.vue";
 import footEr from "@/components/FootEr.vue";
+import axios from 'axios';
 export default {
   name: "HomePage",
   components: {
     navbar,
     footEr,
   },
+  data(){
+    return{
+      message: ""
+    }
+  },
+  methods:{
+    sendMessage(){
+      axios.post("http://localhost:5000/api/message/create")
+      .then(()=>{
+        this.message = "";
+        alert('Votre message a bien été publié')
+      })
+    }
+    
+  }
+  
 };
 </script>
 
@@ -112,12 +136,11 @@ input[class="Write_msg"] {
   margin-right: 10px;
 }
 
-.BoxListmessages{
+.BoxListmessages {
   width: 100%;
-
 }
 
-.listeMsg{
+.listeMsg {
   width: 100%;
   background-color: white;
   min-height: 70px;
@@ -126,6 +149,11 @@ input[class="Write_msg"] {
   align-items: center;
   border-radius: 10px;
   margin-top: 50px;
-  }
+}
 
+.button_send{
+  height: 50px;
+  width: 50px;
+  color: gray;
+}
 </style>

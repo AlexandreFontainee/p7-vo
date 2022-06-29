@@ -3,11 +3,11 @@ import { createStore } from 'vuex'
 // Create a new store instance.
 export default createStore({
     state: {
-        user:[{
+        user:{
         userId: "",
         name: "michelle",
         email: "michelledu38@gmail.com",
-    }]
+    }
     },
     getters:{
         getUserInfo(state ){

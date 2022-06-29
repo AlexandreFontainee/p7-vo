@@ -16,7 +16,7 @@
       <div class="ContainMainProfil">
         <div class="NameUserProfil">
           <div>
-            <p class="named">tqt</p>
+            <p class="named">{{ user.name }}</p>
           </div>
           <div class="btnPicProfile">
             <input class="editPdp" type="button" value="Edit Name" />
@@ -27,10 +27,21 @@
       <div class="ContainMainProfil">
         <div class="mdpProfil">
           <div>
-            <p class="Password">{{ user.id }}</p>
+            <p class="Password">{{ user.name }}</p>
           </div>
           <div class="btnPicProfile">
             <input class="editPdp" type="button" value="Edit Password" />
+          </div>
+        </div>
+      </div>
+
+      <div class="ContainMainProfil">
+        <div class="mdpProfil">
+          <div>
+            <p class="Password">{{ user.email }}</p>
+          </div>
+          <div class="btnPicProfile">
+            <input class="editPdp" type="button" value="Edit email" />
           </div>
         </div>
       </div>
@@ -42,9 +53,7 @@
             <input class="editPdp" type="button" value="Supprimer" />
           </div>
         </div>
-        <button class="testDelete" @click="deleteAccompt()"></button>
       </div>
-      <button @click="getCrud()"></button>
     </div>
   </div>
   <footEr />
@@ -67,48 +76,29 @@ export default {
         id: localStorage.getItem("userId"),
         email: "",
         name: "",
-        password: "",
       },
     token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
     };
   },
   methods: {
-    getCrud() {
-      let id = localStorage.getItem("userId");
+   
 
-      let getId = axios.get("http://localhost:5000/api/authJwt/user/:id" + id);
-      console.log(getId);
-      console.log(this.user);
-    },
-
-    deleteAccompt() {
-      let id = localStorage.getItem("userId");
-
-      let deleteUser = axios.delete(
-        "http://localhost:5000/api/authJwt/delete" + id
-      );
-      console.log(deleteUser);
-      alert("Votre compte a bien été supprimé !");
-      this.$router.push("/login");
-    },
   },
-  created: function () {
+  created(){
     let id = localStorage.getItem("userId");
-    axios
-      .get(
-        "http://127.0.0.1:5000/api/authJwt/user/:id" + id,
-        {
-          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-        }
-      )
-      .then((user) => {
-        this.name = user.data.name;
-        this.email = user.data.email;
-        this.id = user.data.id;
-        console.log(user)
-      });
-  },
+
+    axios.get("http://localhost:5000/api/authJwt/user/:id" + id ,{
+        headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+      }).then((response)=>{
+        this.user = response.data
+        console.log(this.user)
+        localStorage.setItem('userName', response.data.name);
+        localStorage.setItem('userEmail', response.data.email);
+
+      })
+  }
+ 
 };
 </script>
 

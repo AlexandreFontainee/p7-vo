@@ -44,7 +44,9 @@ export default {
         this.$router.push('/login')
         .then(
           localStorage.clear("userId"),
-          localStorage.clear("token")
+          localStorage.clear("token"),
+          localStorage.clear("userEmail"),
+          localStorage.clear("userName")
         )
       },
       goToHome: function(){

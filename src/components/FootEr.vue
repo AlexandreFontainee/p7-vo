@@ -18,7 +18,7 @@ export default {
  height: 60px;
  width: 100%;
  bottom: 0;
- position: absolute;
+ position: relative;
  display: flex;
  flex-direction: row;
  align-items: center;

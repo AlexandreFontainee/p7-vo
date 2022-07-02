@@ -50,6 +50,7 @@ export default {
 <style >
 .BoxListmessages {
   width: 100%;
+  
 }
 
 .listeMsg {

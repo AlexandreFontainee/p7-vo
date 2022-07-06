@@ -108,6 +108,7 @@ export default {
       },
       NewName: "",
       NewEmail: "",
+      NewPicture:"",
       ChangeName: false,
       ChangeEmail: false,
       ChangePassword: false,
@@ -145,6 +146,14 @@ export default {
           })
             this.NewEmail = "";
             this.$router.go()
+    },
+    UpdatePicture(){
+       let id = localStorage.getItem("userId");
+
+      axios.put("http://localhost:5000/api/authJwt/update/" + id,  {
+            imageUrl: this.imageUrl,
+          })
+           this.$router.go()
     },
 
 

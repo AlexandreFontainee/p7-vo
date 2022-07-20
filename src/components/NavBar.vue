@@ -1,12 +1,22 @@
 <template>
   <div class="navbarLogin">
     <div class="imgBoxNavbar">
+      <div>
       <img
         :src="require('@/assets/logo.png')"
         class="logoLeft"
         alt="logo Groupomania"
         @click="goToHome()"
       />
+      </div>
+      <div>
+       <img
+        :src="require('@/assets/message.jpg')"
+        class="logoLeft2"
+        alt="logo Groupomania"
+        @click="goToHome()"
+      />
+      </div>
     </div>
     <div class="logo_right">
       <div class="textBoxNavbar">
@@ -74,6 +84,11 @@ body {
 }
 
 /* partie logo */
+.imgBoxNavbar{
+  display: flex;
+  flex-direction: row;
+}
+
 .GroupoLogo {
   height: 50px;
   margin-right: 50px;
@@ -81,6 +96,10 @@ body {
 .logoLeft{
   height: 50px;
   margin-left: 50px;
+}
+.logoLeft2{
+  height: 50px;
+  margin-left: 30px;
 }
 
 /* partie text */

@@ -8,7 +8,12 @@
             <img class="pdpProfil" :src="require('@/assets/akita.png')" />
           </div>
           <div class="btnPicProfile">
-            <input class="editPdp" type="button" value="Edit Picture" />
+            <img
+          :src="require('@/assets/edit.png')"
+          class="editButton"
+          alt="photo de profile"
+          @click="UpdatePicture()"
+        />
           </div>
         </div>
       </div>
@@ -16,15 +21,15 @@
       <div class="ContainMainProfil">
         <div class="NameUserProfil">
           <div>
-            <p class="named">{{ user.name }}</p>
+            <p class="named"> Nom : {{ user.name }}</p>
           </div>
           <div class="btnPicProfile">
-            <input
-              class="editPdp"
-              type="button"
-              value="Edit Name"
-              @click="callName()"
-            />
+            <img
+          :src="require('@/assets/edit.png')"
+          class="editButton"
+          alt="photo de profile"
+          @click="callName()"
+        />
           </div>
         </div>
       </div>
@@ -39,12 +44,12 @@
             <p class="Password">Password : *****</p>
           </div>
           <div class="btnPicProfile">
-            <input
-              class="editPdp"
-              type="button"
-              value="Edit Password"
-              @click="callPassword()"
-            />
+            <img
+          :src="require('@/assets/edit.png')"
+          class="editButton"
+          alt="photo de profile"
+          @click="callPassword()"
+        />
           </div>
         </div>
       </div>
@@ -58,15 +63,15 @@
       <div class="ContainMainProfil">
         <div class="mdpProfil">
           <div>
-            <p class="Password">{{ user.email }}</p>
+            <p class="Password">e-mail : {{ user.email }}</p>
           </div>
           <div class="btnPicProfile">
-            <input
-              class="editPdp"
-              type="button"
-              value="Edit email"
-              @click="callEmail()"
-            />
+            <img
+          :src="require('@/assets/edit.png')"
+          class="editButton"
+          alt="photo de profile"
+          @click="callEmail()"
+        />
           </div>
         </div>
       </div>
@@ -79,7 +84,12 @@
         <div class="deleteProfil">
           <div class="deleted"><p>Supprimer votre Profil</p></div>
           <div class="btnPicProfile">
-            <input class="editPdp" type="button" value="Supprimer" @click="deleteThisUser()"/>
+           <img
+          :src="require('@/assets/edit.png')"
+          class="editButton"
+          alt="photo de profile"
+          @click="deleteThisUser()"
+        />
           </div>
         </div>
       </div>
@@ -212,12 +222,12 @@ export default {
 }
 
 .ContainMainProfil {
-  width: 50%;
+  width: 30%;
   background-color: #fbfcfc;
   display: flex;
-  margin-left: 25%;
+  margin-left: 35%;
   margin-top: 70px;
-  margin-right: 25%;
+  margin-right: 35%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -238,35 +248,12 @@ export default {
   border: 2px solid black;
   margin-right: 20px;
 }
-
-.editPdp {
-  border: 0;
-  line-height: 2.5;
-  padding: 0 20px;
-  font-size: 1rem;
-  text-align: center;
-  color: #fff;
-  text-shadow: 1px 1px 1px #000;
-  border-radius: 10px;
-  background-color: rgba(220, 0, 0, 1);
-  background-image: linear-gradient(
-    to top left,
-    rgba(0, 0, 0, 0.2),
-    rgba(0, 0, 0, 0.2) 30%,
-    rgba(0, 0, 0, 0)
-  );
-  box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
-    inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+.editButton{
+  width: 40px;
+  height: 40px;
 }
 
-.editPdp:hover {
-  background-color: rgba(255, 0, 0, 1);
-}
 
-.editPdp:active {
-  box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6),
-    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
-}
 
 .named {
   font-size: 18px;
@@ -318,10 +305,14 @@ export default {
 
 .divCn {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   width: 50%;
   margin: auto;
+}
+
+.BtnName{
+  margin-top: 10px;
 }
 
 .New_name {

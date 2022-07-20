@@ -2,7 +2,8 @@
   <div class="global">
     <navbar />
 
-  <PostUser/>
+  <PostichUser/>
+  <MessagePosted/>
   <footEr />
   </div>
 </template>
@@ -10,14 +11,17 @@
 <script>
 import navbar from "@/components/NavBar.vue";
 import footEr from "@/components/FootEr.vue";
-import PostUser from "@/components/PostUser.vue"
+import PostichUser from "@/components/PostUser.vue"
+import MessagePosted from "@/components/MessagePosted.vue"
 import axios from 'axios';
 export default {
   name: "HomePage",
   components: {
+    PostichUser,
     navbar,
     footEr,
-    PostUser,
+    MessagePosted,
+    
 
   },
   data(){

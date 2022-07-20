@@ -33,6 +33,7 @@ import HomePage from '@/views/HomePage.vue';
         component: HomePage,
       },
      
+     
         
     ];
 

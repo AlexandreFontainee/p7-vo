@@ -7,35 +7,41 @@
           <div>
             <img class="pdpProfil" :src="require('@/assets/akita.png')" />
           </div>
-          <div class="btnPicProfile">
-            <img
-          :src="require('@/assets/edit.png')"
-          class="editButton"
-          alt="photo de profile"
-          @click="UpdatePicture()"
-        />
-          </div>
+          <label>File
+        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+      </label>
+      <button v-on:click="submitFile()">Submit</button>
+          
         </div>
       </div>
 
       <div class="ContainMainProfil">
         <div class="NameUserProfil">
           <div>
-            <p class="named"> Nom : {{ user.name }}</p>
+            <p class="named">Nom : {{ user.name }}</p>
           </div>
           <div class="btnPicProfile">
             <img
-          :src="require('@/assets/edit.png')"
-          class="editButton"
-          alt="photo de profile"
-          @click="callName()"
-        />
+              :src="require('@/assets/edit.png')"
+              class="editButton"
+              alt="photo de profile"
+              @click="callName()"
+            />
           </div>
         </div>
       </div>
       <div class="divCn" v-show="ChangeName">
-        <input class="New_name" placeholder="Entrez votre nouveau nom" v-model="NewName"/>
-        <input type="button" value="Changer de nom" class="BtnName" @click="UpdateMyName()">
+        <input
+          class="New_name"
+          placeholder="Entrez votre nouveau nom"
+          v-model="NewName"
+        />
+        <input
+          type="button"
+          value="Changer de nom"
+          class="BtnName"
+          @click="UpdateMyName()"
+        />
       </div>
 
       <div class="ContainMainProfil">
@@ -45,11 +51,11 @@
           </div>
           <div class="btnPicProfile">
             <img
-          :src="require('@/assets/edit.png')"
-          class="editButton"
-          alt="photo de profile"
-          @click="callPassword()"
-        />
+              :src="require('@/assets/edit.png')"
+              class="editButton"
+              alt="photo de profile"
+              @click="callPassword()"
+            />
           </div>
         </div>
       </div>
@@ -67,29 +73,38 @@
           </div>
           <div class="btnPicProfile">
             <img
-          :src="require('@/assets/edit.png')"
-          class="editButton"
-          alt="photo de profile"
-          @click="callEmail()"
-        />
+              :src="require('@/assets/edit.png')"
+              class="editButton"
+              alt="photo de profile"
+              @click="callEmail()"
+            />
           </div>
         </div>
       </div>
       <div class="divCn" v-show="ChangeEmail">
-        <input class="New_email" placeholder="Entrez votre nouvel email " v-model="NewEmail" />
-        <input type="button" value="Changer d'email " class="BtnName" @click="UpdateMyEmail()">
+        <input
+          class="New_email"
+          placeholder="Entrez votre nouvel email "
+          v-model="NewEmail"
+        />
+        <input
+          type="button"
+          value="Changer d'email "
+          class="BtnName"
+          @click="UpdateMyEmail()"
+        />
       </div>
 
       <div class="ContainMainProfil">
         <div class="deleteProfil">
           <div class="deleted"><p>Supprimer votre Profil</p></div>
           <div class="btnPicProfile">
-           <img
-          :src="require('@/assets/edit.png')"
-          class="editButton"
-          alt="photo de profile"
-          @click="deleteThisUser()"
-        />
+            <img
+              :src="require('@/assets/edit.png')"
+              class="editButton"
+              alt="photo de profile"
+              @click="deleteThisUser()"
+            />
           </div>
         </div>
       </div>
@@ -115,21 +130,25 @@ export default {
         id: localStorage.getItem("userId"),
         email: "",
         name: "",
+        userImageUrl: "",      
       },
+      file:"",
+       IsAdmin: false,
+      userImageUrl:"",
       NewName: "",
       NewEmail: "",
-      NewPicture:"",
+      NewPicture: "",
       ChangeName: false,
       ChangeEmail: false,
       ChangePassword: false,
       token: localStorage.getItem("token"),
-       userId: localStorage.getItem("userId"),
+      userId: localStorage.getItem("userId"),
     };
   },
   methods: {
     // méthode PUT
     callName() {
-     this.ChangeName = true;
+      this.ChangeName = true;
     },
     callEmail() {
       return (this.ChangeEmail = true);
@@ -138,51 +157,58 @@ export default {
       return (this.ChangePassword = true);
     },
 
-    UpdateMyName(){
-       let id = localStorage.getItem("userId");
+    UpdateMyName() {
+      let id = localStorage.getItem("userId");
 
-      axios.put("http://localhost:5000/api/authJwt/update/" + id,  {
-            name: this.NewName,
-          })
-           this.NewName = "";
-           this.$router.go()
+      axios.put("http://localhost:5000/api/authJwt/update/" + id, {
+        name: this.NewName,
+      });
+      this.NewName = "";
+      this.$router.go();
     },
 
-    UpdateMyEmail(){
-       let id = localStorage.getItem("userId");
+    UpdateMyEmail() {
+      let id = localStorage.getItem("userId");
 
-      axios.put("http://localhost:5000/api/authJwt/update/" + id,  {
-             email: this.NewEmail,
-          })
-            this.NewEmail = "";
-            this.$router.go()
+      axios.put("http://localhost:5000/api/authJwt/update/" + id, {
+        email: this.NewEmail,
+      });
+      this.NewEmail = "";
+      this.$router.go();
     },
-    UpdatePicture(){
-       let id = localStorage.getItem("userId");
+    UpdatePicture() {
+      let id = localStorage.getItem("userId");
 
-      axios.put("http://localhost:5000/api/authJwt/update/" + id,  {
-            imageUrl: this.imageUrl,
-          })
-           this.$router.go()
+      axios.put("http://localhost:5000/api/authJwt/updatePic/" + id, {
+        userImageUrl: this.userImageUrl,
+        
+      });
+      console.log()
+      this.$router.go();
     },
+    
 
-
+    //
     // méthode DELETE
     deleteThisUser() {
       let id = localStorage.getItem("userId");
       let confirmDelete = confirm("Etes-vous sûr de supprimer votre compte ?");
       if (confirmDelete == true) {
-        axios.delete("http://localhost:5000/api/authJwt/delete/" + id, {
-          headers: { Authorization: "Bearer " + localStorage.getItem("token") }
-        }).then((response)=> {
-          console.log(response);
-          alert('Votre compte a bien été supprimé ! ')
-          localStorage.clear();
-          this.$router.push("/login")
-        })
-      }else {
+        axios
+          .delete("http://localhost:5000/api/authJwt/delete/" + id, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            alert("Votre compte a bien été supprimé ! ");
+            localStorage.clear();
+            this.$router.push("/login");
+          });
+      } else {
         // refresh la page
-        this.$router.go()
+        this.$router.go();
       }
     },
   },
@@ -198,6 +224,7 @@ export default {
         console.log(this.user);
         localStorage.setItem("userName", response.data.name);
         localStorage.setItem("userEmail", response.data.email);
+        localStorage.setItem("isAdmin", response.data.IsAdmin);
       });
   },
 };
@@ -232,6 +259,7 @@ export default {
   align-items: center;
   flex-direction: column;
   border-radius: 8px;
+  border: solid 1px black;
 }
 
 .PicProfile {
@@ -248,12 +276,10 @@ export default {
   border: 2px solid black;
   margin-right: 20px;
 }
-.editButton{
+.editButton {
   width: 40px;
   height: 40px;
 }
-
-
 
 .named {
   font-size: 18px;
@@ -311,7 +337,7 @@ export default {
   margin: auto;
 }
 
-.BtnName{
+.BtnName {
   margin-top: 10px;
 }
 

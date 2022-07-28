@@ -36,6 +36,7 @@
               placeholder="Votre titre"
               id="title"
               v-model="title"
+              required
             />
           </div>
           <div class="container_msg">
@@ -48,6 +49,7 @@
                   placeholder="écrivez votre message ..."
                   id="message"
                   v-model="message_content"
+                  required
                 />
               </div>
             </div>
@@ -60,6 +62,15 @@
                   alt=""
                 />
               </div>
+              <input
+              type="file"
+              class="form-control"
+              name="image"
+              id="image"
+              ref="image"
+              aria-describedby="image"
+              @change="selectFile()"
+            />
             </div>
           </div>
           <div class="box_btn_msg">
@@ -82,17 +93,30 @@ export default {
       newMessage: false,
       title: "",
       message_content: "",
+      image:"",
+      imageUrl:"",
+      UserId: localStorage.getItem("userName"),
       user: {
         userName: localStorage.getItem("userName"),
       },
     };
   },
   methods: {
-    CreateMessage() {
-      axios
+    selectFile() {
+      this.image = this.$refs.image.files[0];
+      this.imageUrl = URL.createObjectURL(this.image);
+    },
+
+    async CreateMessage() {
+       const formData = new FormData();
+      formData.append("image", this.image);
+
+     await axios
         .post("http://localhost:5000/api/message/create", {
           message_content: this.message_content,
           title: this.title,
+          UserId: this.UserId,
+          imageUrl: this.imageUrl,
         })
         .then((response) => {
           console.log(response);

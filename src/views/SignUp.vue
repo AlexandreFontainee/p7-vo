@@ -25,7 +25,7 @@
               required
               v-model="email"
               id="email"
-              pattern="[a-zâäàéèùêëîïôöçñA-Z0-9.-_]+[@]{1}[a-zA_Z0-9.-_]+[.]{1}[a-z]{2,4}"
+              pattern="^[a-zA-Z0-9.!#$%'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
             />
           </div>
           <div class="input_box">
@@ -42,9 +42,7 @@
         </form>
 
         <!-- Notre bouton d'envoie des infos -->
-        <button class="box_Button" @click="signup()">
-          Créer un compte
-        </button>
+        <button class="box_Button" @click="signup()">Créer un compte</button>
         <p class="redirect">
           Vous avez déjà un compte ?
           <router-link to="/login">Connectez-vous !</router-link>
@@ -75,19 +73,18 @@ export default {
         password: this.password,
       };
       console.log(dataInput);
-      axios.post("http://localhost:5000/api/authJwt/signup", {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
-      })
-      .then(() => {
-
-            this.$router.push("/login");
-          })
-          .catch(
-            () => (this.error = "problème lors de la création du compte")
-          );
+      axios
+        .post("http://localhost:5000/api/authJwt/signup", {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+        })
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch(() => (this.error = "problème lors de la création du compte"));
     },
+  
   },
 };
 </script>

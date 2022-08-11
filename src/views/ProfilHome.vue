@@ -7,11 +7,8 @@
           <div>
             <img class="pdpProfil" :src="require('@/assets/akita.png')" />
           </div>
-          <label>File
-        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-      </label>
-      <button v-on:click="submitFile()">Submit</button>
-          
+          <input type="file" id="image" ref="image" />
+          <button v-on:click="envoie()">Submit</button>
         </div>
       </div>
 
@@ -133,7 +130,7 @@ export default {
         userImageUrl: "",      
       },
       file:"",
-       IsAdmin: false,
+      IsAdmin: false,
       userImageUrl:"",
       NewName: "",
       NewEmail: "",
@@ -146,6 +143,24 @@ export default {
     };
   },
   methods: {
+    // test image
+
+    envoie(){
+  let img = document.getElementById('image').files[0]
+  var formData = new FormData()
+        formData.append('img', img)
+
+        axios.post('http://localhost:3000/upload_image', formData)
+          .then((resp) => {
+            console.log(resp)
+          })
+          .catch((err) => {
+            console.log(err.response)
+          })   
+  
+},
+
+
     // méthode PUT
     callName() {
       this.ChangeName = true;

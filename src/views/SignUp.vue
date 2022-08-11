@@ -62,6 +62,8 @@ export default {
       email: "",
       name: "",
       password: "",
+      IsAdmin:false,
+      userImageUrl:"",
     };
   },
 
@@ -71,6 +73,8 @@ export default {
         email: this.email,
         name: this.name,
         password: this.password,
+        IsAdmin: this.IsAdmin,
+        userImageUrl: this.userImageUrl
       };
       console.log(dataInput);
       axios
@@ -78,6 +82,8 @@ export default {
           name: document.getElementById("name").value,
           email: document.getElementById("email").value,
           password: document.getElementById("password").value,
+          IsAdmin: this.IsAdmin,
+          userImageUrl: this.userImageUrl
         })
         .then(() => {
           this.$router.push("/login");

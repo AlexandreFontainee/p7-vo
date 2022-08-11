@@ -11,7 +11,7 @@
             />
           </div>
           <div>
-            <p>{{ user.userName }}</p>
+            <p>{{ name }}</p>
           </div>
         </div>
         <div class="right_div">
@@ -25,7 +25,7 @@
       </div>
       <!-- @click affiche les inputs pour le nouveau message  -->
       <div v-if="newMessage" class="box_Message">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
           <div class="msg_title">
             <button class="btn_echap" @click="newMessage = false">X</button>
             <p class="t_titre">Votre titre:</p>
@@ -64,12 +64,8 @@
               </div>
               <input
               type="file"
-              class="form-control"
               name="image"
               id="image"
-              ref="image"
-              aria-describedby="image"
-              @change="selectFile()"
             />
             </div>
           </div>
@@ -95,10 +91,7 @@ export default {
       message_content: "",
       image:"",
       imageUrl:"",
-      UserId: localStorage.getItem("userName"),
-      user: {
-        userName: localStorage.getItem("userName"),
-      },
+      name: localStorage.getItem("userName"),
     };
   },
   methods: {
@@ -108,14 +101,15 @@ export default {
     },
 
     async CreateMessage() {
-       const formData = new FormData();
-      formData.append("image", this.image);
+       let img = document.getElementById('image').files[0]
+       var formData = new FormData()
+        formData.append('img', img)
 
      await axios
         .post("http://localhost:5000/api/message/create", {
           message_content: this.message_content,
           title: this.title,
-          UserId: this.UserId,
+          name: this.name,
           imageUrl: this.imageUrl,
         })
         .then((response) => {

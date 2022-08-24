@@ -62,11 +62,8 @@
                   alt=""
                 />
               </div>
-              <input
-              type="file"
-              name="image"
-              id="image"
-            />
+              <input @change="selectFile" type="file" id="image" />
+              <button @click="uploadButton">Upload</button>
             </div>
           </div>
           <div class="box_btn_msg">
@@ -87,35 +84,40 @@ export default {
   data() {
     return {
       newMessage: false,
+      selectedFile: null,
       title: "",
+      file: null,
+      imageUrl: "",
       message_content: "",
-      image:"",
-      imageUrl:"",
+      image: "",
       name: localStorage.getItem("userName"),
+      userId: localStorage.getItem("token"),
     };
   },
   methods: {
-    selectFile() {
-      this.image = this.$refs.image.files[0];
-      this.imageUrl = URL.createObjectURL(this.image);
+    selectFile(event) {
+      this.selectedFile = event.target.files[0];
     },
 
-    async CreateMessage() {
-       let img = document.getElementById('image').files[0]
-       var formData = new FormData()
-        formData.append('img', img)
-
-     await axios
-        .post("http://localhost:5000/api/message/create", {
-          message_content: this.message_content,
-          title: this.title,
-          name: this.name,
-          imageUrl: this.imageUrl,
+    CreateMessage() {
+      const fd = new FormData();
+      fd.append("images", this.selectedFile);
+      fd.append("title", this.title);
+      fd.append("name", this.name);
+      fd.append("userId", this.userId);
+      fd.append("message_content", this.message_content);
+  // eslint-disable-next-line no-debugger
+  debugger
+      axios
+        .post("http://localhost:5000/api/message/create", fd, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
         })
         .then((response) => {
           console.log(response);
           alert("Votre message a bien été publié");
-          this.$router.go("/HomePage");
+          //this.$router.go("/HomePage");
         });
     },
   },
@@ -126,7 +128,7 @@ export default {
 .glob {
   background-color: #ebedef;
 }
-.paddingbox{
+.paddingbox {
   padding-top: 2%;
 }
 

@@ -7,8 +7,10 @@
           <div>
             <img class="pdpProfil" :src="require('@/assets/akita.png')" />
           </div>
-          <input type="file" id="image" ref="image" />
-          <button v-on:click="envoie()">Submit</button>
+          <form method="PUT" enctype="multipart/form-data">
+          <input type="file" id="image" @change="onFileSelected" />
+          <button @click="onUpload">Upload</button>
+          </form>
         </div>
       </div>
 
@@ -127,11 +129,11 @@ export default {
         id: localStorage.getItem("userId"),
         email: "",
         name: "",
-        userImageUrl: "",      
+        userImageUrl: "",
       },
-      file:"",
+      file: "",
       IsAdmin: false,
-      userImageUrl:"",
+      userImageUrl: "",
       NewName: "",
       NewEmail: "",
       NewPicture: "",
@@ -140,26 +142,27 @@ export default {
       ChangePassword: false,
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      selectedFile: null,
     };
   },
   methods: {
     // test image
 
-    envoie(){
-  let img = document.getElementById('image').files[0]
-  var formData = new FormData()
-        formData.append('img', img)
+    onFileSelected(event) {
+      this.selectedFile = event.target.files[0];
+    
+    },
 
-        axios.post('http://localhost:3000/upload_image', formData)
-          .then((resp) => {
-            console.log(resp)
-          })
-          .catch((err) => {
-            console.log(err.response)
-          })   
-  
-},
-
+    onUpload(){
+      const fd = new FormData()
+      fd.append('images', this.selectedFile)
+      axios.put("http://localhost:5000/api/authJwt/upload/", fd,{
+        userImageUrl: this.selectedFile
+      })
+      .then(res => {
+        console.log(res)
+      })
+    },
 
     // méthode PUT
     callName() {
@@ -191,17 +194,7 @@ export default {
       this.NewEmail = "";
       this.$router.go();
     },
-    UpdatePicture() {
-      let id = localStorage.getItem("userId");
-
-      axios.put("http://localhost:5000/api/authJwt/updatePic/" + id, {
-        userImageUrl: this.userImageUrl,
-        
-      });
-      console.log()
-      this.$router.go();
-    },
-    
+   
 
     //
     // méthode DELETE
@@ -239,7 +232,7 @@ export default {
         console.log(this.user);
         localStorage.setItem("userName", response.data.name);
         localStorage.setItem("userEmail", response.data.email);
-        localStorage.setItem("isAdmin", response.data.IsAdmin);
+        localStorage.setItem("IsAdmin", response.data.IsAdmin);
       });
   },
 };

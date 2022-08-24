@@ -23,11 +23,14 @@
 
         <div class="box_image">
           <p class="titre">{{ msg.imageUrl }}</p>
+          <button @click="test">test</button>
         </div>
 
-        <div class="btn_admin" v-if="msg.name == user.name || IsAdmin == true">
-          <a class="bin"  @click="deleteMsg()"         
-          >supprimer</a>
+        <div
+          class="btn_admin"
+          v-if="msg.userId == user.token || IsAdmin == true"
+        >
+          <a class="bin" @click="deleteMsg()">supprimer</a>
         </div>
       </div>
     </div>
@@ -41,11 +44,11 @@ export default {
   components: {},
   data() {
     return {
-      post: [{ message_content: "" }, { title: "" }, { name: "" }, {imageUrl:""}],
+      post: [{ message_content: "" }, { title: "" }, { name: "" }, {imageUrl:""}, {userId:""}],
       IsAdmin: localStorage.getItem("IsAdmin"),
 
       user:{
-        name: localStorage.getItem('userName')
+        token: localStorage.getItem('token')
       }
     };
   },
@@ -66,11 +69,11 @@ export default {
         console.log(resersed);
 
         data.forEach((element) => {
-          const { title, message_content, UserId, imageUrl } = element;
+          const { title, message_content, userId, imageUrl } = element;
 
           (this.message_content = message_content),
             (this.title = title),
-            (this.UserId = UserId);
+            (this.userId = userId);
             (this.imageUrl = imageUrl)
 
           console.log(title);
@@ -78,14 +81,26 @@ export default {
       });
   },
   methods: {
-    deleteMsg() {
 
-        axios
-          .delete("http://localhost:5000/api/message/deleteMessage")
+    test(){
+      let id = localStorage.getItem("userId");
+        axios.get("http://localhost:5000/api/message/uniqueMessage/" + id,{
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+    },
+
+    deleteMsg() {
+        let id = localStorage.getItem("userId");
+        axios.get("http://localhost:5000/api/message/uniqueMessage" + id,{
+          title: this.title,
+          message: this.message_content,
+          userId: this.userId,
+          })
           .then((response) => {
             console.log(response);
             alert("Votre message a bien été supprimé ! ");
-            this.$router.push("/HomePage");
           });
       
     },

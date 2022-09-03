@@ -63,7 +63,6 @@
                 />
               </div>
               <input @change="selectFile" type="file" id="image" />
-              <button @click="uploadButton">Upload</button>
             </div>
           </div>
           <div class="box_btn_msg">
@@ -84,32 +83,30 @@ export default {
   data() {
     return {
       newMessage: false,
-      selectedFile: null,
       title: "",
       file: null,
-      imageUrl: "",
+      imageUrl: null,
       message_content: "",
       image: "",
       name: localStorage.getItem("userName"),
-      userId: localStorage.getItem("token"),
+      userId: localStorage.getItem("userId"),
     };
   },
   methods: {
     selectFile(event) {
-      this.selectedFile = event.target.files[0];
+      this.imageUrl = event.target.files[0];
     },
 
     CreateMessage() {
       const fd = new FormData();
-      fd.append("images", this.selectedFile);
+      fd.append("images", this.imageUrl);
       fd.append("title", this.title);
       fd.append("name", this.name);
       fd.append("userId", this.userId);
       fd.append("message_content", this.message_content);
-  // eslint-disable-next-line no-debugger
-  debugger
+
       axios
-        .post("http://localhost:5000/api/message/create", fd, {
+        .post("http://localhost:5000/api/message/create/", fd, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -217,6 +214,11 @@ input[class="input_titre"] {
   height: 30px;
   background-color: #ebedef;
   border-radius: 10px;
+}
+
+input[id="image"]{
+  display: flex;
+
 }
 
 .box_photo {

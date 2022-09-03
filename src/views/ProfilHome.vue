@@ -7,9 +7,9 @@
           <div>
             <img class="pdpProfil" :src="require('@/assets/akita.png')" />
           </div>
-          <form method="PUT" enctype="multipart/form-data">
-          <input type="file" id="image" @change="onFileSelected" />
-          <button @click="onUpload">Upload</button>
+          <form method="PUT" enctype="multipart/form-data" class="formcss">
+            <input type="file" id="image" @change="onFileSelected" />
+            <button class="btncss" @click="onUpload">Upload</button>
           </form>
         </div>
       </div>
@@ -150,18 +150,19 @@ export default {
 
     onFileSelected(event) {
       this.selectedFile = event.target.files[0];
-    
     },
 
-    onUpload(){
-      const fd = new FormData()
-      fd.append('images', this.selectedFile)
-      axios.put("http://localhost:5000/api/authJwt/upload/", fd,{
-        userImageUrl: this.selectedFile
-      })
-      .then(res => {
-        console.log(res)
-      })
+    onUpload() {
+      let id = localStorage.getItem("userId");
+      const fd = new FormData();
+      fd.append("images", this.selectedFile);
+      axios
+        .put("http://localhost:5000/api/authJwt/upload/" + id, fd, {
+          userImageUrl: this.selectedFile,
+        })
+        .then((res) => {
+          console.log(res);
+        });
     },
 
     // méthode PUT
@@ -194,7 +195,6 @@ export default {
       this.NewEmail = "";
       this.$router.go();
     },
-   
 
     //
     // méthode DELETE
@@ -368,5 +368,55 @@ export default {
   margin: auto;
   margin-top: 30px;
   height: 30px;
+}
+
+/* responsive partie */
+
+@media screen and (max-width: 425px) {
+  .ContainMainProfil {
+    width: 50%;
+    margin: auto;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 30px;
+  }
+
+  .pdpProfil {
+    margin-left: 20px;
+  }
+
+  input[id="image"] {
+    display: none;
+  }
+
+  .btncss {
+    display: none;
+  }
+
+  .btnPicProfile {
+    display: none;
+  }
+
+  .named {
+    margin-right: 0;
+    margin-top: 22px;
+  }
+
+  .NameUserProfil {
+    margin-top: 0;
+  }
+
+  .Password{
+    margin-right: 0;
+    margin-top: 22px;
+  }
+
+  .deleted{
+    margin-right: 0;
+  }
+
+  .global_background{
+    height: 650px;
+  }
 }
 </style>

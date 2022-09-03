@@ -23,12 +23,12 @@
 
         <div class="box_image">
           <p class="titre">{{ msg.imageUrl }}</p>
-          <button @click="test">test</button>
+          <button @click="test()">test</button>
         </div>
 
         <div
           class="btn_admin"
-          v-if="msg.userId == user.token || IsAdmin == true"
+          v-if="msg.userId == user.userId || IsAdmin == true"
         >
           <a class="bin" @click="deleteMsg()">supprimer</a>
         </div>
@@ -44,17 +44,22 @@ export default {
   components: {},
   data() {
     return {
-      post: [{ message_content: "" }, { title: "" }, { name: "" }, {imageUrl:""}, {userId:""}],
+      post: [
+        { message_content: "" },
+        { title: "" },
+        { name: "" },
+        { imageUrl: "" },
+        { userId: "" },
+      ],
       IsAdmin: localStorage.getItem("IsAdmin"),
 
-      user:{
-        token: localStorage.getItem('token')
-      }
+      user: {
+        userId: localStorage.getItem("userId"),
+      },
     };
   },
 
   created() {
-
     fetch("http://localhost:5000/api/message/messagePosted/", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -74,37 +79,35 @@ export default {
           (this.message_content = message_content),
             (this.title = title),
             (this.userId = userId);
-            (this.imageUrl = imageUrl)
+          this.imageUrl = imageUrl;
 
           console.log(title);
         });
       });
   },
   methods: {
-
-    test(){
+    test() {
       let id = localStorage.getItem("userId");
-        axios.get("http://localhost:5000/api/message/uniqueMessage/" + id,{
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          })
+      axios.get("http://localhost:5000/api/message/uniqueMessage/" + id, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
     },
 
     deleteMsg() {
-        let id = localStorage.getItem("userId");
-        axios.get("http://localhost:5000/api/message/uniqueMessage" + id,{
+      let id = localStorage.getItem("token");
+      axios
+        .delete("http://localhost:5000/api/message/deleteMessage/" + id, {
           title: this.title,
           message: this.message_content,
           userId: this.userId,
-          })
-          .then((response) => {
-            console.log(response);
-            alert("Votre message a bien été supprimé ! ");
-          });
-      
+        })
+        .then((response) => {
+          console.log(response);
+          alert("Votre message a bien été supprimé ! ");
+        });
     },
-
   },
 };
 </script>
@@ -193,4 +196,75 @@ export default {
   text-decoration: underline;
   color: red;
 }
+
+/* partie responsive */
+
+@media screen and (max-width: 425px) {
+  .listeMsg {
+    width: 70%;
+    margin: auto;
+    background-color: white;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    margin-top: 50px;
+    border: solid 1px black;
+  }
+
+  .box_post {
+    width: 90%;
+    margin-top: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 20px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  input[class="inputNewMsg"] {
+    width: 170px;
+    height: 30px;
+    background-color: #ebedef;
+    border-radius: 10px;
+  }
+
+  .box_Message {
+    width: 80%;
+    height: 340px;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 30px;
+  }
+
+.box_photo{
+  display: none;
+}
+input[id="image"] {
+    display: none;
+}
+
+  textarea[class="content_msg"] {
+    width: 280px;
+    height: 100px;
+    background-color: #ebedef;
+    border-radius: 10px;
+  }
+
+  .btn_echap {
+    position: relative;
+    right: -140px;
+    top: 20px;
+    color: red;
+}
+}
+
+
 </style>

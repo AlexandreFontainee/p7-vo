@@ -88,6 +88,7 @@ methods: {
     align-items: center;
     margin: auto;
   background-color: white;
+  border-radius: 70px;
 }
 
 .input_box{
@@ -126,8 +127,56 @@ input[class="input_Style"]{
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    border-radius: 50px;
 }
 
+/* responsive partie */
+
+@media screen and (max-width: 425px){
+
+  .box{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    align-items: center;
+    margin: auto;
+    background-color: white;
+  }
+
+  .box_title{
+    font-size: 18px;
+    margin: 0;
+    margin-top: 10px;
+  }
+
+  .faux_body{
+    height: 550px;
+
+  }
+
+  input[class="input_Style"]{
+    height: 20px;
+  }
+
+  .box_Button{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 9px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 50px;
+  }
+
+  .redirect{
+    font-size: 12px;
+  }
+
+} 
 
 </style>
 

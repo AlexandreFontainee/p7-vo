@@ -123,4 +123,29 @@ body {
   margin-right: 7px;
   text-decoration: none;
 }
+
+/*  Partie responsive  */
+
+@media screen and (max-width:426px) {
+
+
+  
+.logoLeft {
+  height: 30px;
+  margin-right: 30px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.logoLeft2{
+  display: none;
+}
+
+.GroupoLogo{
+  height: 30px;
+  margin-right: 10px;
+}
+
+}
+
 </style>

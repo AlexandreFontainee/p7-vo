@@ -21,9 +21,8 @@
     <div class="logo_right">
       <div class="textBoxNavbar">
         <img
-          :src="require('@/assets/pdp.png')"
-          class="GroupoLogo"
-          alt="photo de profile"
+          :src="userImageUrl"
+          class="pdprofil"
           @click="goToLoProfile()"
         />
       </div>
@@ -45,8 +44,14 @@
 export default {
   name: "navBar",
 
-  data: function () {
+  data: 
+  function () {
     return {
+      
+        userImageUrl: localStorage.getItem("userImageUrl"),
+        
+      
+
       goToLoProfile: function () {
         this.$router.push('/profile') ;
       },
@@ -108,6 +113,15 @@ body {
 
   display: flex;
   flex-direction: row;
+    margin-top: 10px;
+
+}
+.pdprofil{
+   width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 2px solid black;
+  margin-right: 50px;
 }
 
 .textBoxNavBar {

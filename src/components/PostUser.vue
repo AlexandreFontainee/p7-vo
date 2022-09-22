@@ -2,18 +2,6 @@
   <div class="glob">
     <div class="paddingbox">
       <div class="box_post">
-        <div class="left_div">
-          <div>
-            <img
-              :src="require('@/assets/pdp.png')"
-              class="pdp"
-              alt="photo de profile"
-            />
-          </div>
-          <div>
-            <p>{{ name }}</p>
-          </div>
-        </div>
         <div class="right_div">
           <input
             type="text"
@@ -88,6 +76,8 @@ export default {
       imageUrl: null,
       message_content: "",
       image: "",
+      userImageUrl: localStorage.getItem("userImageUrl"),
+      messageId: this._id,
       name: localStorage.getItem("userName"),
       userId: localStorage.getItem("userId"),
     };
@@ -104,6 +94,8 @@ export default {
       fd.append("name", this.name);
       fd.append("userId", this.userId);
       fd.append("message_content", this.message_content);
+      fd.append("messageId", this.messageId);
+      fd.append("userImageUrl", this.userImageUrl)
 
       axios
         .post("http://localhost:5000/api/message/create/", fd, {
@@ -136,11 +128,12 @@ export default {
   height: 70px;
   display: flex;
   flex-direction: row;
-  background-color: white;
+ background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
   border-radius: 20px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
+
 
 .btn_echap {
   position: relative;
@@ -155,9 +148,7 @@ export default {
   margin-left: 30px;
 }
 
-.right_div {
-  margin-right: 50px;
-}
+
 
 input[class="inputNewMsg"] {
   width: 300px;

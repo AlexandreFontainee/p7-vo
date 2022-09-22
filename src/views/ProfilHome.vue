@@ -5,7 +5,7 @@
       <div class="ContainMainProfil">
         <div class="PicProfile">
           <div>
-            <img class="pdpProfil" :src="require('@/assets/akita.png')" />
+            <img class="pdpProfil" :src="user.userImageUrl" />
           </div>
           <form method="PUT" enctype="multipart/form-data" class="formcss">
             <input type="file" id="image" @change="onFileSelected" />
@@ -233,6 +233,7 @@ export default {
         localStorage.setItem("userName", response.data.name);
         localStorage.setItem("userEmail", response.data.email);
         localStorage.setItem("IsAdmin", response.data.IsAdmin);
+        localStorage.setItem("userImageUrl", response.data.userImageUrl);
       });
   },
 };

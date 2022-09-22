@@ -2,10 +2,10 @@
   <!-- partie avec les listes des messages -->
   <div class="global">
     <div class="BoxListmessages">
-      <div v-for="msg in post" :key="msg.message_content" class="listeMsg">
+      <div v-for="msg in post" :key="msg.id" class="listeMsg">
         <div class="box_top_msg">
           <div class="box_message_photo">
-            <img class="pdpProfil" :src="require('@/assets/akita.png')" />
+            <img class="pdpProfil" :src="msg.userImageUrl" />
           </div>
           <div class="box_message_userID">
             <p class="userId">
@@ -21,16 +21,25 @@
           <p class="titre">{{ msg.message_content }}</p>
         </div>
 
-        <div class="box_image">
-          <p class="titre">{{ msg.imageUrl }}</p>
-          <button @click="test()">test</button>
+        <div class="box_image" v-if="empty == false">
+          <img class="imageUrl" :src="msg.imageUrl" />
         </div>
 
-        <div
-          class="btn_admin"
-          v-if="msg.userId == user.userId || IsAdmin == true"
-        >
-          <a class="bin" @click="deleteMsg()">supprimer</a>
+        <button @click="test(msg._id)">test</button>
+        <div class="messageId">{{ msg._id }}</div>
+
+        <div class="compteur_div">
+          <div class="compteur_left">
+            <img class="Like" :src="require('@/assets/like.png')" />
+            <img class="dislike" :src="require('@/assets/dislike.jpg')" />
+          </div>
+
+          <div
+            class="btn_admin"
+            v-if="msg.userId == user.userId || IsAdmin == true"
+          >
+            <a class="bin" @click="test(this)">supprimer</a>
+          </div>
         </div>
       </div>
     </div>
@@ -50,12 +59,15 @@ export default {
         { name: "" },
         { imageUrl: "" },
         { userId: "" },
+        { _id: "" },
+        { userImageUrl: "" },
       ],
       IsAdmin: localStorage.getItem("IsAdmin"),
 
       user: {
         userId: localStorage.getItem("userId"),
       },
+      empty: false,
     };
   },
 
@@ -74,25 +86,52 @@ export default {
         console.log(resersed);
 
         data.forEach((element) => {
-          const { title, message_content, userId, imageUrl } = element;
+          const {
+            title,
+            message_content,
+            userId,
+            imageUrl,
+            messageId,
+            userImageUrl,
+          } = element;
 
           (this.message_content = message_content),
             (this.title = title),
             (this.userId = userId);
           this.imageUrl = imageUrl;
+          this.messageId = messageId;
+          this.userImageUrl = userImageUrl;
 
-          console.log(title);
+          console.log();
         });
       });
   },
   methods: {
-    test() {
-      let id = localStorage.getItem("userId");
-      axios.get("http://localhost:5000/api/message/uniqueMessage/" + id, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
+    ImageEmpty() {
+      if (this.imageUrl == "") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+
+    test(a) {
+      alert(a);
+      axios.get(
+        "http://localhost:5000/api/message/uniqueMessage/" + a,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
         },
-      });
+
+        {
+          message_content: this.message_content,
+          title: this.title,
+          name: this.name,
+          userId: this.userId,
+        }
+      );
     },
 
     deleteMsg() {
@@ -195,6 +234,41 @@ export default {
 .bin {
   text-decoration: underline;
   color: red;
+  margin-right: 20px;
+  padding-top: 10px;
+}
+
+/* compteur */
+.Like {
+  width: 30px;
+  height: 38px;
+}
+.dislike {
+  width: 50px;
+  height: 28px;
+  margin-top: 6px;
+}
+
+.compteur_left {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+.compteur_div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.box_image {
+  width: 100%;
+}
+
+.imageUrl {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 200px;
 }
 
 /* partie responsive */
@@ -244,12 +318,12 @@ export default {
     border-radius: 30px;
   }
 
-.box_photo{
-  display: none;
-}
-input[id="image"] {
+  .box_photo {
     display: none;
-}
+  }
+  input[id="image"] {
+    display: none;
+  }
 
   textarea[class="content_msg"] {
     width: 280px;
@@ -263,8 +337,6 @@ input[id="image"] {
     right: -140px;
     top: 20px;
     color: red;
+  }
 }
-}
-
-
 </style>

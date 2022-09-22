@@ -63,7 +63,7 @@ export default {
       name: "",
       password: "",
       IsAdmin:false,
-      userImageUrl:"",
+      userImageUrl:"http://localhost:5000/images/akita.png",
     };
   },
 

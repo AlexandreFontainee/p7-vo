@@ -2,29 +2,25 @@
   <div class="navbarLogin">
     <div class="imgBoxNavbar">
       <div>
-      <img
-        :src="require('@/assets/logo.png')"
-        class="logoLeft"
-        alt="logo Groupomania"
-        @click="goToHome()"
-      />
+        <img
+          :src="require('@/assets/logo.png')"
+          class="logoLeft"
+          alt="logo Groupomania"
+          @click="goToHome()"
+        />
       </div>
       <div>
-       <img
-        :src="require('@/assets/message.jpg')"
-        class="logoLeft2"
-        alt="logo Groupomania"
-        @click="goToHome()"
-      />
+        <img
+          :src="require('@/assets/message.jpg')"
+          class="logoLeft2"
+          alt="logo Groupomania"
+          @click="goToHome()"
+        />
       </div>
     </div>
     <div class="logo_right">
       <div class="textBoxNavbar">
-        <img
-          :src="userImageUrl"
-          class="pdprofil"
-          @click="goToLoProfile()"
-        />
+        <img :src="userImageUrl" class="pdprofil" @click="goToLoProfile()" />
       </div>
       <div class="textBoxNavbar">
         <img
@@ -40,33 +36,29 @@
 
 
 <script>
-
 export default {
   name: "navBar",
 
-  data: 
-  function () {
+  data: function () {
     return {
-      
-        userImageUrl: localStorage.getItem("userImageUrl"),
-        
-      
+      userImageUrl: localStorage.getItem("userImageUrl"),
 
       goToLoProfile: function () {
-        this.$router.push('/profile') ;
+        this.$router.push("/profile");
       },
       logout: function () {
-        this.$router.push('/login')
-        .then(
-          localStorage.clear("userId"),
-          localStorage.clear("token"),
-          localStorage.clear("userEmail"),
-          localStorage.clear("userName")
-        )
+        this.$router
+          .push("/login")
+          .then(
+            localStorage.clear("userId"),
+            localStorage.clear("token"),
+            localStorage.clear("userEmail"),
+            localStorage.clear("userName")
+          );
       },
-      goToHome: function(){
-        this.$router.push('/HomePage')
-        }
+      goToHome: function () {
+        this.$router.push("/HomePage");
+      },
     };
   },
 };
@@ -89,7 +81,7 @@ body {
 }
 
 /* partie logo */
-.imgBoxNavbar{
+.imgBoxNavbar {
   display: flex;
   flex-direction: row;
 }
@@ -98,26 +90,24 @@ body {
   height: 50px;
   margin-right: 50px;
 }
-.logoLeft{
+.logoLeft {
   height: 50px;
   margin-left: 50px;
 }
-.logoLeft2{
+.logoLeft2 {
   height: 50px;
   margin-left: 30px;
 }
 
 /* partie text */
 
-.logo_right{
-
+.logo_right {
   display: flex;
   flex-direction: row;
-    margin-top: 10px;
-
+  margin-top: 10px;
 }
-.pdprofil{
-   width: 50px;
+.pdprofil {
+  width: 50px;
   height: 50px;
   border-radius: 100%;
   border: 2px solid black;
@@ -138,28 +128,38 @@ body {
   text-decoration: none;
 }
 
-/*  Partie responsive  */
-
-@media screen and (max-width:426px) {
 
 
-  
-.logoLeft {
-  height: 30px;
-  margin-right: 30px;
-  margin-top: 10px;
-  margin-left: 10px;
+/*  Partie responsive  portable */
+
+@media screen and (max-width: 426px)  {
+  .logoLeft {
+    height: 30px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+  .logoLeft2 {
+    display: none;
+  }
+
+  .GroupoLogo {
+    height: 50px;
+    margin-right: 10px;
+  }
 }
 
-.logoLeft2{
-  display: none;
-}
+/*  Partie responsive  tablette */
 
-.GroupoLogo{
-  height: 30px;
-  margin-right: 10px;
-}
+@media screen and (min-width:427px) and (max-width:769px){
 
-}
+  .logoLeft{
+    margin-left: 10px;
+  }
 
+  .GroupoLogo{
+    margin-right: 20px;
+  }
+}
 </style>

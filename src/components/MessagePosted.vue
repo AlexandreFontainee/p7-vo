@@ -25,9 +25,6 @@
           <img class="imageUrl" :src="msg.imageUrl" />
         </div>
 
-        <button @click="test(msg._id)">test</button>
-        <div class="messageId">{{ msg._id }}</div>
-
         <div class="compteur_div">
           <div class="compteur_left">
             <img class="Like" :src="require('@/assets/like.png')" />
@@ -38,7 +35,7 @@
             class="btn_admin"
             v-if="msg.userId == user.userId || IsAdmin == true"
           >
-            <a class="bin" @click="test(this)">supprimer</a>
+            <a class="bin" @click="deleteMsg(msg._id)">supprimer</a>
           </div>
         </div>
       </div>
@@ -115,36 +112,29 @@ export default {
       }
     },
 
-    test(a) {
-      alert(a);
-      axios.get(
-        "http://localhost:5000/api/message/uniqueMessage/" + a,
-        {
+    test(id) {
+      axios.get("http://localhost:5000/api/message/uniqueMessage/" + id, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        message_content: this.message_content,
+        title: this.title,
+        name: this.name,
+        userId: this.userId,
+      });
+    },
+
+    deleteMsg(id) {
+      axios
+        .delete("http://localhost:5000/api/message/deleteMessage/" + id, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
-        },
-
-        {
-          message_content: this.message_content,
-          title: this.title,
-          name: this.name,
-          userId: this.userId,
-        }
-      );
-    },
-
-    deleteMsg() {
-      let id = localStorage.getItem("token");
-      axios
-        .delete("http://localhost:5000/api/message/deleteMessage/" + id, {
-          title: this.title,
-          message: this.message_content,
-          userId: this.userId,
         })
         .then((response) => {
           console.log(response);
-          alert("Votre message a bien été supprimé ! ");
+          alert("votre message a bien été supprimé !")
+          this.$router.go();
         });
     },
   },
@@ -302,10 +292,11 @@ export default {
   }
 
   input[class="inputNewMsg"] {
-    width: 170px;
+    width: 200px;
     height: 30px;
     background-color: #ebedef;
     border-radius: 10px;
+    margin-left: 83px;
   }
 
   .box_Message {
@@ -339,4 +330,104 @@ export default {
     color: red;
   }
 }
+
+/*  Partie responsive  tablette */
+
+@media screen and (min-width:427px) and (max-width:769px) {
+  .box_post {
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .listeMsg{
+    width: 50%;
+    margin: auto;
+    background-color: white;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    margin-top: 50px;
+    border: solid 1px black;
+  }
+
+  input[class="inputNewMsg"]{
+    width: 200px;
+  }
+
+  .box_Message{
+    width: 50%;
+    height: 340px;
+    margin-right: 25%;
+    margin-left: 25%;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 30px;
+  }
+
+  .right_msgbox{
+    display: none;
+  }
+
+  .btn_echap{
+        right: -160px;
+
+  }
+}
+
+/*  Partie responsive  pc portable */
+
+@media screen and (min-width:769px) and (max-width:1024px){
+
+   .box_post{
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    height: 70px;
+    margin-top: 20px;
+  
+   }
+
+   .listeMsg{
+    width: 50%;
+    margin: auto;
+    background-color: white;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    margin-top: 50px;
+    border: solid 1px black;
+   }
+
+   .box_Message{
+
+    width: 50%;
+    height: 340px;
+    margin-right: 25%;
+    margin-left: 25%;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 30px;
+   }
+
+   textarea[class="content_msg"]{
+
+    width: 230px;
+   }
+
+   input[id="image"]{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    
+   }
+}
+
 </style>

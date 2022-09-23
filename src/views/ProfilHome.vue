@@ -420,4 +420,59 @@ export default {
     height: 650px;
   }
 }
+
+/*  Partie responsive  tablette */
+
+@media screen and (min-width:427px) and (max-width:769px){
+
+  .ContainMainProfil{
+    width: 50%;
+    background-color: #fbfcfc;
+    display: flex;
+    margin-left: 25%;
+    margin-top: 70px;
+    margin-right: 25%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    border: solid 1px black;
+  }
+
+  .pdpProfil{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border: 2px solid black;
+    margin-right: 20px;
+    margin-left: 10px;
+  }
+}
+
+/*  Partie responsive  pc portable */
+
+@media screen and (min-width:769px) and (max-width:1024px){
+
+  .ContainMainProfil{
+    width: 50%;
+    background-color: #fbfcfc;
+    display: flex;
+    margin-left: 25%;
+    margin-top: 70px;
+    margin-right: 25%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    border: solid 1px black;
+  }
+
+  .pdpProfil{
+    width: 130px;
+    height: 130px;
+    border-radius: 100%;
+    border: 2px solid black;
+    margin-right: 50px;
+  }
+}
 </style>

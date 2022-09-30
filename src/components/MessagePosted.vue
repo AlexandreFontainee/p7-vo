@@ -16,7 +16,7 @@
             class="modifMsg"
             v-if="msg.userId == user.userId || IsAdmin == true"
           >
-            <a class="modifLink">Modifier</a>
+            <a @click="modif = true" class="modifLink">Modifier</a>
           </div>
         </div>
         <div class="box_message_title">
@@ -33,8 +33,17 @@
 
         <div class="compteur_div">
           <div class="compteur_left">
-            <img class="Like" :src="require('@/assets/like.png')" />
-            <img class="dislike" :src="require('@/assets/dislike.jpg')" />
+            <img
+              class="Like"
+              :src="require('@/assets/like.png')"
+              @click="likeIncr()"
+            />
+            {{ compteur }}
+            <img
+              class="dislike"
+              :src="require('@/assets/dislike.jpg')"
+              @click="DisLikeIncr()"
+            />
           </div>
 
           <div
@@ -44,38 +53,41 @@
             <a class="bin" @click="deleteMsg(msg._id)">supprimer</a>
           </div>
         </div>
+        
       </div>
     </div>
-    <div class="BoxModif" v-show="modif">
-      <div class="boxstyle">
-        <button class="closeModif">X</button>
-        <div class="modif_title">
-          <p class=style_modif>titre:</p>
-          <input
-            type="text"
-            class="titleM_input"
-            placeholder="Votre titre ..."
-          />
+    <div class="BoxModif" v-if="modif">
+          <div class="boxstyle">
+            <button class="closeModif" @click="modif = false">X</button>
+            <div class="modif_title">
+              <p class="style_modif">titre:</p>
+              <input
+                type="text"
+                class="titleM_input"
+                placeholder="Votre titre ..."
+                v-model="newTitle"
+              />
+            </div>
+            <div class="modif_messageC">
+              <p class="style_modif">message:</p>
+              <textarea
+                class="messageM_input"
+                placeholder="Votre message ..."
+                cols="20"
+                rows="8"
+                v-model="newMsg"
+              ></textarea>
+            </div>
+            <div class="modif_image">
+              <p class="style_modif">Ajouter une photo</p>
+              <input type="file" id="image" />
+            </div>
+            <p class="info">* veuillez bien remplir tout les champs</p>
+            <div class="btnDmodif">
+              <button class="post_modif" @click="test(msg._id)">envoyez</button>
+            </div>
+          </div>
         </div>
-        <div class="modif_messageC">
-          <p class=style_modif>message:</p>
-          <textarea
-            class="messageM_input"
-            placeholder="Votre message ..."
-            cols="20"
-            rows="8"
-          ></textarea>
-        </div>
-        <div class="modif_image">
-          <p class=style_modif>Ajouter une photo</p>
-          <input type="file" id="image" />
-        </div>
-        <p class="info"> * veuillez bien remplir tout les champs</p>
-        <div class="btnDmodif">
-        <button class="post_modif"> envoyez </button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -94,14 +106,21 @@ export default {
         { userId: "" },
         { _id: "" },
         { userImageUrl: "" },
+        { like: "" },
+        { dislike: "" },
+        { compteur: 0 },
       ],
       IsAdmin: localStorage.getItem("IsAdmin"),
+      newMsg: "",
+      newTitle: "",
+      newPicture: "",
 
       user: {
         userId: localStorage.getItem("userId"),
       },
       empty: false,
-      modif: true,
+      modif: false,
+      compteur: 0,
     };
   },
 
@@ -127,6 +146,8 @@ export default {
             imageUrl,
             messageId,
             userImageUrl,
+            like,
+            dislike,
           } = element;
 
           (this.message_content = message_content),
@@ -135,12 +156,23 @@ export default {
           this.imageUrl = imageUrl;
           this.messageId = messageId;
           this.userImageUrl = userImageUrl;
+          this.like = like;
+          this.dislike = dislike;
 
           console.log();
         });
       });
   },
   methods: {
+    // compteur
+
+    likeIncr() {
+      this.compteur = this.compteur + 1;
+    },
+    DisLikeIncr() {
+      this.compteur = this.compteur - 1;
+    },
+
     ImageEmpty() {
       if (this.imageUrl == "") {
         return false;
@@ -149,15 +181,19 @@ export default {
       }
     },
 
+    openPut() {
+      this.modif == true;
+      console.log("test");
+    },
+
     test(id) {
-      axios.get("http://localhost:5000/api/message/uniqueMessage/" + id, {
+      axios.put("http://localhost:5000/api/message/modif/" + id, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        message_content: this.message_content,
-        title: this.title,
+        message_content: this.newMsg,
+        title: this.newTitle,
         name: this.name,
-        userId: this.userId,
       });
     },
 
@@ -179,8 +215,11 @@ export default {
 </script>
 
 <style >
+/* police d'écriture */
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,300&family=Oswald:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap");
+
 /* modif message*/
 
 .BoxModif {
@@ -195,6 +234,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 20px;
+  border: solid 1px black;
 }
 
 .boxstyle {
@@ -206,35 +247,43 @@ export default {
 input[class="titleM_input"] {
   height: 50px;
   width: 100%;
+  background-color: #ebedef;
 }
 
 textarea[class="messageM_input"] {
   width: 100%;
+  background-color: #ebedef;
+  border: 2px black solid;
 }
 
-.btnDmodif{
+.btnDmodif {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.info{
+.info {
   margin-top: 20px;
   font-size: 11px;
   color: gray;
 }
 
-.style_modif{
-font-family: 'Oswald', sans-serif;
-font-size: 18px;
-margin-top: 5px;
+.titre {
+  font-family: "Montserrat", sans-serif;
+  color: black;
 }
 
-.closeModif{
-color: red;
-position: relative;
-margin-top: 20px;
-right: -480px;
+.style_modif {
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.closeModif {
+  color: red;
+  position: relative;
+  margin-top: 20px;
+  right: -480px;
 }
 
 /* modfi message */
@@ -299,6 +348,7 @@ right: -480px;
 
 .userId {
   font-size: 17px;
+  font-family: "Oswald", sans-serif;
 }
 
 .box_message_title {
@@ -367,7 +417,6 @@ right: -480px;
   margin-right: 10%;
   height: 200px;
 }
-
 
 /* partie responsive */
 

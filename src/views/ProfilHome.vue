@@ -240,6 +240,9 @@ export default {
 </script>
 
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,300&family=Oswald:wght@400;600&display=swap');
+
 .global_background {
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
   height: 900px;
@@ -295,6 +298,7 @@ export default {
   font-weight: 900;
   margin-right: 40px;
   margin-top: 30px;
+  font-family: 'Oswald', sans-serif;
 }
 
 .NameUserProfil {
@@ -316,12 +320,14 @@ export default {
   font-weight: 900;
   margin-right: 40px;
   margin-top: 30px;
+  font-family: 'Oswald', sans-serif;
 }
 
 .deleted {
   font-size: 18px;
   font-weight: 900;
   margin-right: 40px;
+  font-family: 'Oswald', sans-serif;
 }
 
 .deleteProfil {

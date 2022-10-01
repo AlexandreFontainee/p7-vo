@@ -3,113 +3,21 @@
   <div class="global">
     <div class="BoxListmessages">
       <div v-for="msg in post" :key="msg.id" class="listeMsg">
-        <div class="box_top_msg">
-          <div class="box_message_photo">
-            <img class="pdpProfil" :src="msg.userImageUrl" />
-          </div>
-          <div class="box_message_userID">
-            <p class="userId">
-              <span class="userspan">made by </span>{{ msg.name }}
-            </p>
-          </div>
-          <div
-            class="modifMsg"
-            v-if="msg.userId == user.userId || IsAdmin == true"
-          >
-            <a @click="modif = true" class="modifLink">Modifier</a>
-          </div>
-        </div>
-        <div class="box_message_title">
-          <p class="titre">{{ msg.title }} :</p>
-        </div>
-
-        <div class="box_message_content">
-          <p class="titre">{{ msg.message_content }}</p>
-        </div>
-
-        <div class="box_image" v-if="empty == false">
-          <img class="imageUrl" :src="msg.imageUrl" />
-        </div>
-
-        <div class="compteur_div">
-          <div class="compteur_left">
-            <img
-              class="Like"
-              :src="require('@/assets/like.png')"
-              @click="likeIncr()"
-            />
-            {{ compteur }}
-            <img
-              class="dislike"
-              :src="require('@/assets/dislike.jpg')"
-              @click="DisLikeIncr()"
-            />
-          </div>
-
-          <div
-            class="btn_admin"
-            v-if="msg.userId == user.userId || IsAdmin == true"
-          >
-            <a class="bin" @click="deleteMsg(msg._id)">supprimer</a>
-          </div>
-        </div>
-        
+        <Message v-bind:msg="msg" />
       </div>
     </div>
-    <div class="BoxModif" v-if="modif">
-          <div class="boxstyle">
-            <button class="closeModif" @click="modif = false">X</button>
-            <div class="modif_title">
-              <p class="style_modif">titre:</p>
-              <input
-                type="text"
-                class="titleM_input"
-                placeholder="Votre titre ..."
-                v-model="newTitle"
-              />
-            </div>
-            <div class="modif_messageC">
-              <p class="style_modif">message:</p>
-              <textarea
-                class="messageM_input"
-                placeholder="Votre message ..."
-                cols="20"
-                rows="8"
-                v-model="newMsg"
-              ></textarea>
-            </div>
-            <div class="modif_image">
-              <p class="style_modif">Ajouter une photo</p>
-              <input type="file" id="image" />
-            </div>
-            <p class="info">* veuillez bien remplir tout les champs</p>
-            <div class="btnDmodif">
-              <button class="post_modif" @click="test(msg._id)">envoyez</button>
-            </div>
-          </div>
-        </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import Message from "@/components/Message.vue";
+
 export default {
   name: "MessagePosted",
-  components: {},
+  components: { Message },
   data() {
     return {
-      post: [
-        { message_content: "" },
-        { title: "" },
-        { name: "" },
-        { imageUrl: "" },
-        { userId: "" },
-        { _id: "" },
-        { userImageUrl: "" },
-        { like: "" },
-        { dislike: "" },
-        { compteur: 0 },
-      ],
+      post: [],
       IsAdmin: localStorage.getItem("IsAdmin"),
       newMsg: "",
       newTitle: "",
@@ -135,81 +43,8 @@ export default {
         this.post = data;
         console.log(data);
         // on inverse le sens des données pour toujours avoir les derniers msg
-        const resersed = data.reverse();
-        console.log(resersed);
-
-        data.forEach((element) => {
-          const {
-            title,
-            message_content,
-            userId,
-            imageUrl,
-            messageId,
-            userImageUrl,
-            like,
-            dislike,
-          } = element;
-
-          (this.message_content = message_content),
-            (this.title = title),
-            (this.userId = userId);
-          this.imageUrl = imageUrl;
-          this.messageId = messageId;
-          this.userImageUrl = userImageUrl;
-          this.like = like;
-          this.dislike = dislike;
-
-          console.log();
-        });
-      });
-  },
-  methods: {
-    // compteur
-
-    likeIncr() {
-      this.compteur = this.compteur + 1;
-    },
-    DisLikeIncr() {
-      this.compteur = this.compteur - 1;
-    },
-
-    ImageEmpty() {
-      if (this.imageUrl == "") {
-        return false;
-      } else {
-        return true;
-      }
-    },
-
-    openPut() {
-      this.modif == true;
-      console.log("test");
-    },
-
-    test(id) {
-      axios.put("http://localhost:5000/api/message/modif/" + id, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        message_content: this.newMsg,
-        title: this.newTitle,
-        name: this.name,
-      });
-    },
-
-    deleteMsg(id) {
-      axios
-        .delete("http://localhost:5000/api/message/deleteMessage/" + id, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          alert("votre message a bien été supprimé !");
-          this.$router.go();
-        });
-    },
+        data.reverse();
+    });
   },
 };
 </script>

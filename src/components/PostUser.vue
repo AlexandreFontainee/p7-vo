@@ -106,7 +106,7 @@ export default {
         .then((response) => {
           console.log(response);
           alert("Votre message a bien été publié");
-          //this.$router.go("/HomePage");
+          this.$router.go("/HomePage");
         });
     },
   },

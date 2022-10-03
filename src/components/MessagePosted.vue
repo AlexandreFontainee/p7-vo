@@ -57,20 +57,22 @@ export default {
 
 /* modif message*/
 
-.BoxModif {
+.BoxModif{
   z-index: 1;
-  width: 30%;
-  margin-left: 35%;
-  margin-right: 35%;
-  margin: auto;
-  height: 500px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  border: solid 1px black;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    height: 500px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: solid 1px black;
 }
 
 .boxstyle {
@@ -118,7 +120,7 @@ textarea[class="messageM_input"] {
   color: red;
   position: relative;
   margin-top: 20px;
-  right: -480px;
+  right: -200px;
 }
 
 /* modfi message */
@@ -215,7 +217,7 @@ textarea[class="messageM_input"] {
   margin-left: 300px;
 }
 
-.modifLink {
+.modifLinke {
   color: red;
   margin-top: 20px;
 }
@@ -320,8 +322,41 @@ textarea[class="messageM_input"] {
     right: -140px;
     top: 20px;
     color: red;
+
   }
+
+   .modifMsg{
+  margin-left: 45px;
 }
+
+.modifLinke{
+  margin-top: 20px;
+}
+
+.BoxModif{
+
+    width: 100%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin: auto;
+    margin-top: 90px;
+    margin-bottom: 20px;
+    height: 500px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: solid 1px black;
+
+}
+.closeModif{
+  right: -90px;
+}
+}
+
+
 
 /*  Partie responsive  tablette */
 
@@ -369,7 +404,27 @@ textarea[class="messageM_input"] {
   .btn_echap {
     right: -160px;
   }
+  
+
+   .modifMsg{
+  margin-left: 125px;
 }
+
+.modifLinke{
+  margin-top: 20px;
+}
+
+.boxstyle{
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.closeModif{
+  right: -140px;
+}
+}
+
 
 /*  Partie responsive  pc portable */
 
@@ -381,6 +436,7 @@ textarea[class="messageM_input"] {
     height: 70px;
     margin-top: 20px;
   }
+
 
   .listeMsg {
     width: 50%;
@@ -414,5 +470,34 @@ textarea[class="messageM_input"] {
     flex-direction: column;
     margin-left: 10px;
   }
+
+   .modifMsg{
+  margin-left: 255px;
+}
+
+.modifLinke{
+  margin-top: 20px;
+}
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1800px){
+
+     .modifMsg{
+  margin-left: 175px;
+}
+
+.modifLinke{
+  margin-top: 20px;
+}
+
+.boxstyle{
+
+      width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.closeModif{
+  right: -150px;
+}
 }
 </style>

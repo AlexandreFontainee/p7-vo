@@ -23,7 +23,7 @@
     </div>
     <div class="modif_image">
       <p class="style_modif">Ajouter une photo</p>
-      <input type="file" id="image" @change="selectedFile"/>
+      <input type="file" id="image" @change="FileSelected"/>
     </div>
     <p class="info">* veuillez bien remplir tout les champs</p>
     <div class="btnDmodif">
@@ -44,7 +44,7 @@ export default {
       newMsg: "",
       newTitle: "",
       newPicture: "",
-      selectedFile:"",
+      selectedFile:null
     };
   },
   methods: {
@@ -54,16 +54,17 @@ export default {
 
     envoie(id) {
     const fd = new FormData();
-      fd.append("images", this.imageUrl);
+      fd.append("images", this.selectedFile);
+       fd.append("title", this.title);
       fd.append("message_content", this.message_content);
-      fd.append("title", this.title);
       axios.put(
-        "http://localhost:5000/api/message/modif/" + id, fd,
+        "http://localhost:5000/api/message/modif/" +id, fd,
         {
           headers: {
-            Authorization: "Bearer" + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
-        });
+          
+        })
       alert('test')
     },
 
@@ -71,3 +72,4 @@ export default {
   },
 };
 </script>
+

@@ -7,7 +7,7 @@
       <p class="userId"><span class="userspan">made by </span>{{ msg.name }}</p>
     </div>
     <div class="modifMsg" v-if="msg.userId == user.userId || IsAdmin == true">
-      <a @click="modifyMessage()" class="modifLink">Modifier</a>
+     <div class="modifLinke"> <a @click="modifyMessage()" class="modifLink">Modifier</a></div>
     </div>
   </div>
   <div class="box_message_title">
@@ -96,3 +96,4 @@ export default {
   },
 };
 </script>
+

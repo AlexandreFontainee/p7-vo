@@ -1,5 +1,7 @@
+<!-- Page du profil utilisateur  -->
+
 <template>
-  <navbar />
+  <navbar/>
   <div class="global_background">
     <div class="boxProfile">
       <div class="ContainMainProfil">
@@ -132,7 +134,6 @@ export default {
         userImageUrl: "",
       },
       file: "",
-      IsAdmin: false,
       userImageUrl: "",
       NewName: "",
       NewEmail: "",
@@ -142,11 +143,12 @@ export default {
       ChangePassword: false,
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
+      IsAdmin: localStorage.getItem("IsAdmin"),
       selectedFile: null,
     };
   },
   methods: {
-    // test image
+    // selection de l'image de profil
 
     onFileSelected(event) {
       this.selectedFile = event.target.files[0];
@@ -165,7 +167,7 @@ export default {
         });
     },
 
-    // méthode PUT
+    // méthode PUT pour chaque élément
     callName() {
       this.ChangeName = true;
     },
@@ -196,7 +198,7 @@ export default {
       this.$router.go();
     },
 
-    //
+
     // méthode DELETE
     deleteThisUser() {
       let id = localStorage.getItem("userId");
@@ -220,6 +222,8 @@ export default {
       }
     },
   },
+
+  // à l'ouverture de ma page après le login pour récupérer les infos de l'utilisateur
   created() {
     let id = localStorage.getItem("userId");
 
@@ -229,12 +233,11 @@ export default {
       })
       .then((response) => {
         this.user = response.data;
-        console.log(this.user);
         localStorage.setItem("userName", response.data.name);
         localStorage.setItem("userEmail", response.data.email);
-        localStorage.setItem("IsAdmin", response.data.IsAdmin);
         localStorage.setItem("userImageUrl", response.data.userImageUrl);
       });
+  
   },
 };
 </script>

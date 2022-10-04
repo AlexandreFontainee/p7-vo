@@ -1,3 +1,4 @@
+<!-- Page d'enregistrement du compte  -->
 <template>
   <div class="container_global">
     <div class="faux_body">
@@ -62,8 +63,8 @@ export default {
       email: "",
       name: "",
       password: "",
-      IsAdmin:false,
       userImageUrl:"http://localhost:5000/images/akita.png",
+      IsAdmin: false
     };
   },
 
@@ -73,8 +74,8 @@ export default {
         email: this.email,
         name: this.name,
         password: this.password,
-        IsAdmin: this.IsAdmin,
-        userImageUrl: this.userImageUrl
+        userImageUrl: this.userImageUrl,
+        IsAdmin : this.IsAdmin
       };
       console.log(dataInput);
       axios
@@ -82,8 +83,8 @@ export default {
           name: document.getElementById("name").value,
           email: document.getElementById("email").value,
           password: document.getElementById("password").value,
-          IsAdmin: this.IsAdmin,
-          userImageUrl: this.userImageUrl
+          userImageUrl: this.userImageUrl,     
+          IsAdmin : this.IsAdmin  
         })
         .then(() => {
           this.$router.push("/login");

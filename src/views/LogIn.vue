@@ -1,3 +1,4 @@
+<!-- Page Login  -->
 <template>
 <div class="container-global">
 <div class="faux_body">
@@ -40,10 +41,13 @@ export default {
     return{
       email: "",
       password: "",
-      empty: false
+      empty: false,
+      userImageUrl:"http://localhost:5000/images/akita.png",
     }
   },
 methods: {
+
+        // méthode Post pour vérifier les informations de log
         login(){
             if(!this.email || !this.password){
               return this.empty = true;
@@ -55,6 +59,8 @@ methods: {
             .then(function (response){
               localStorage.setItem("userId",  response.data.userId);
               localStorage.setItem("token",   response.data.token);
+              localStorage.setItem("IsAdmin", response.data.IsAdmin)
+              localStorage.setItem("userImageUrl", response.data.userImageUrl);
               router.push("/Profile");
             })
             .catch((error)=>{

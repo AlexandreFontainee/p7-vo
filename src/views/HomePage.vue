@@ -1,3 +1,4 @@
+<!-- Page centrale qui contient toute la partie des messages -->
 <template>
   <div class="global">
     <navbar />

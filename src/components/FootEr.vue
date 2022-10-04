@@ -1,3 +1,4 @@
+<!-- Pied de page classique -->
 <template>
     <div class="footBox">
         <p class="copy">© 2020 Alexandre All rights reserved.</p>

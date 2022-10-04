@@ -3,6 +3,7 @@
   <div class="global">
     <div class="BoxListmessages">
       <div v-for="msg in post" :key="msg.id" class="listeMsg">
+        <!-- c'est ici que je récupère les donnés de chaque message-->
         <Message v-bind:msg="msg" />
       </div>
     </div>
@@ -18,20 +19,21 @@ export default {
   data() {
     return {
       post: [],
-      IsAdmin: localStorage.getItem("IsAdmin"),
       newMsg: "",
       newTitle: "",
       newPicture: "",
 
       user: {
         userId: localStorage.getItem("userId"),
+        IsAdmin: localStorage.getItem("IsAdmin"),
       },
       empty: false,
       modif: false,
-      compteur: 0,
+      IsAdmin: localStorage.getItem("IsAdmin"),
     };
   },
 
+  // affichage de tout les messages
   created() {
     fetch("http://localhost:5000/api/message/messagePosted/", {
       headers: {
@@ -120,7 +122,7 @@ textarea[class="messageM_input"] {
   color: red;
   position: relative;
   margin-top: 20px;
-  right: -200px;
+  right: -150px;
 }
 
 /* modfi message */
@@ -206,10 +208,11 @@ textarea[class="messageM_input"] {
 }
 
 .bin {
-  text-decoration: underline;
   color: red;
   margin-right: 20px;
   padding-top: 10px;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
 }
 
 .modifMsg {
@@ -253,6 +256,7 @@ textarea[class="messageM_input"] {
   margin-left: 10%;
   margin-right: 10%;
   height: 200px;
+  margin-bottom: 20px;
 }
 
 /* partie responsive */
@@ -421,7 +425,7 @@ textarea[class="messageM_input"] {
 }
 
 .closeModif{
-  right: -140px;
+  right: -110px;
 }
 }
 

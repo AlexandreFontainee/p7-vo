@@ -1,3 +1,4 @@
+<!-- Page d'entrée  -->
 <template>
     <div class="container-global">
 

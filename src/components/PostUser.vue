@@ -1,3 +1,4 @@
+<!-- Page d'envoie des messages -->
 <template>
   <div class="glob">
     <div class="paddingbox">
@@ -77,16 +78,18 @@ export default {
       message_content: "",
       image: "",
       userImageUrl: localStorage.getItem("userImageUrl"),
-      messageId: this._id,
       name: localStorage.getItem("userName"),
       userId: localStorage.getItem("userId"),
     };
   },
   methods: {
+
+    // sélection de l'image a envoyer 
     selectFile(event) {
       this.imageUrl = event.target.files[0];
     },
 
+    // nouveau message Post
     CreateMessage() {
       const fd = new FormData();
       fd.append("images", this.imageUrl);
@@ -94,7 +97,6 @@ export default {
       fd.append("name", this.name);
       fd.append("userId", this.userId);
       fd.append("message_content", this.message_content);
-      fd.append("messageId", this.messageId);
       fd.append("userImageUrl", this.userImageUrl)
 
       axios

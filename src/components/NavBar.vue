@@ -1,3 +1,4 @@
+<!-- haut de Page avec toute les redirections -->
 <template>
   <div class="navbarLogin">
     <div class="imgBoxNavbar">
@@ -46,6 +47,8 @@ export default {
       goToLoProfile: function () {
         this.$router.push("/profile");
       },
+
+
       logout: function () {
         this.$router
           .push("/login")
@@ -56,6 +59,8 @@ export default {
             localStorage.clear("userName")
           );
       },
+
+      
       goToHome: function () {
         this.$router.push("/HomePage");
       },

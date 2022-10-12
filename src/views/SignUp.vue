@@ -17,6 +17,7 @@
               id="name"
               pattern="[a-zâäàéèùêëîïôöçñA-Z-0-9\s]{3,25}"
             />
+            <p v-show="errorName">Champ vide, veuillez mettre un nom</p>
           </div>
           <div class="input_box">
             <input
@@ -28,6 +29,7 @@
               id="email"
               pattern="^[a-zA-Z0-9.!#$%'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
             />
+            <p v-show="errorEmail"> email déjà utilisé ou non valide </p>
           </div>
           <div class="input_box">
             <input
@@ -39,6 +41,7 @@
               id="password"
               pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})"
             />
+            <p v-show="errorPw"> Veuillez bien entrer un mot de passe</p>
           </div>
         </form>
 
@@ -63,35 +66,40 @@ export default {
       email: "",
       name: "",
       password: "",
-      userImageUrl:"http://localhost:5000/images/akita.png",
-      IsAdmin: false
+      userImageUrl: "http://localhost:5000/images/akita.png",
+      IsAdmin: false,
+      errorName: false,
+      errorEmail: false,
+      errorPw: false,
     };
   },
 
   methods: {
     signup() {
-      let dataInput = {
-        email: this.email,
-        name: this.name,
-        password: this.password,
-        userImageUrl: this.userImageUrl,
-        IsAdmin : this.IsAdmin
-      };
-      console.log(dataInput);
+
+      if (!this.name) {
+        return this.errorName =true
+      }
+      if (!this.email) {
+        return this.errorEmail =true
+      }
+      if (!this.password) {
+        return this.errorPw= true
+      }
+
       axios
         .post("http://localhost:5000/api/authJwt/signup", {
           name: document.getElementById("name").value,
           email: document.getElementById("email").value,
           password: document.getElementById("password").value,
-          userImageUrl: this.userImageUrl,     
-          IsAdmin : this.IsAdmin  
+          userImageUrl: this.userImageUrl,
+          IsAdmin: this.IsAdmin,
         })
         .then(() => {
           this.$router.push("/login");
         })
         .catch(() => (this.error = "problème lors de la création du compte"));
     },
-  
   },
 };
 </script>
@@ -156,9 +164,8 @@ input[class="input_Style"] {
 
 /*  partie responsive  */
 
-@media screen and (max-width: 425px){
-
-  .box{
+@media screen and (max-width: 425px) {
+  .box {
     display: flex;
     flex-direction: column;
     width: 70%;
@@ -167,25 +174,24 @@ input[class="input_Style"] {
     background-color: white;
   }
 
-  .box_title{
+  .box_title {
     font-size: 18px;
     margin: 0;
     margin-top: 10px;
   }
 
-  .faux_body{
+  .faux_body {
     height: 550px;
-
   }
 
-  input[class="input_Style"]{
+  input[class="input_Style"] {
     height: 20px;
   }
 
-  .box_Button{
+  .box_Button {
     margin-top: 20px;
     margin-bottom: 0px;
-    background-color: #4CAF50;
+    background-color: #4caf50;
     border: none;
     color: white;
     padding: 9px 18px;
@@ -196,7 +202,7 @@ input[class="input_Style"] {
     border-radius: 50px;
   }
 
-  .redirect{
+  .redirect {
     font-size: 12px;
   }
 }

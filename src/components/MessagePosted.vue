@@ -116,6 +116,7 @@ textarea[class="messageM_input"] {
   font-family: "Oswald", sans-serif;
   font-size: 18px;
   margin-top: 5px;
+  cursor:pointer;
 }
 
 .closeModif {
@@ -213,6 +214,7 @@ textarea[class="messageM_input"] {
   padding-top: 10px;
   font-size: 20px;
   font-family: "Oswald", sans-serif;
+  cursor: pointer;
 }
 
 .modifMsg {
@@ -223,6 +225,8 @@ textarea[class="messageM_input"] {
 .modifLinke {
   color: red;
   margin-top: 20px;
+    font-family: "Oswald", sans-serif;
+    cursor: pointer;
 }
 
 /* compteur */
@@ -248,13 +252,16 @@ textarea[class="messageM_input"] {
 }
 
 .box_image {
-  width: 100%;
+  width: 60%;
+  align-items: center;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .imageUrl {
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
+
+  max-width: 100%;
+  min-width:40%;
   height: 200px;
   margin-bottom: 20px;
 }
@@ -457,7 +464,7 @@ textarea[class="messageM_input"] {
 
   .box_Message {
     width: 50%;
-    height: 340px;
+    height: 500px;
     margin-right: 25%;
     margin-left: 25%;
     margin-top: 30px;

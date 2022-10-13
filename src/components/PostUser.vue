@@ -169,7 +169,7 @@ input[class="inputNewMsg"] {
 
 .box_Message {
   width: 30%;
-  height: 340px;
+  height: 500px;
   margin-right: 35%;
   margin-left: 35%;
   margin-top: 30px;
@@ -186,7 +186,7 @@ input[class="inputNewMsg"] {
 
 .container_msg {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
@@ -223,8 +223,9 @@ input[id="image"]{
 }
 
 .photo_msg {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
 }
 
 .t_photo {
@@ -251,4 +252,5 @@ input[id="image"]{
   justify-content: center;
   margin-top: 20px;
 }
+
 </style>

@@ -50,22 +50,9 @@
           <div>
             <p class="Password">Password : *****</p>
           </div>
-          <div class="btnPicProfile">
-            <img
-              :src="require('@/assets/edit.png')"
-              class="editButton"
-              alt="photo de profile"
-              @click="callPassword()"
-            />
-          </div>
         </div>
       </div>
-      <div class="divCn" v-show="ChangePassword">
-        <input
-          class="New_Password"
-          placeholder="Entrez votre nouveau mot de passe"
-        />
-      </div>
+
 
       <div class="ContainMainProfil">
         <div class="mdpProfil">
@@ -140,7 +127,6 @@ export default {
       NewPicture: "",
       ChangeName: false,
       ChangeEmail: false,
-      ChangePassword: false,
       token: localStorage.getItem("token"),
       userId: localStorage.getItem("userId"),
       IsAdmin: localStorage.getItem("IsAdmin"),

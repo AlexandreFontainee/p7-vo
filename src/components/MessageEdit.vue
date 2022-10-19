@@ -22,6 +22,7 @@
           v-model="newMsg"
         ></textarea>
       </div>
+
       <p class="info">* veuillez bien remplir tout les champs</p>
       <div class="btnDmodif">
         <button class="post_modif" @click="envoie(msg._id)">envoyez</button>
@@ -41,12 +42,12 @@ export default {
       newMsg: "",
       newTitle: "",
       newPicture: "",
-      selectedFile: null,
       updatedAt:"",
       IsAdmin: localStorage.getItem("IsAdmin")
     };
   },
   methods: {
+
 
     // requête PUT 
   async envoie(id) {
